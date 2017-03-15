@@ -24,11 +24,12 @@ namespace cabshare
         public int startIndex { get; set; }
         public int endIndex { get; set; }
         public float score { get; set; }
-        public Resolution[] resolution { get; set; }
+        public Resolution resolution { get; set; }
     }
     public class Resolution
     {
-        public DateTime datetime;
+        public DateTime? date;
+        public DateTime? time;
         
     }
     
