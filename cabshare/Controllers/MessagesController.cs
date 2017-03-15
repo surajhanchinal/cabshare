@@ -33,6 +33,10 @@ namespace cabshare
             {
                 HandleSystemMessage(activity);
             }
+            if (activity.Type== ActivityTypes.Message)
+            {
+                await Conversation.SendAsync(activity, () => new CabShareLuisDialog());
+            }
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
