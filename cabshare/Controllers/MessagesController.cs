@@ -28,8 +28,8 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
                 //List<string> str = new List<string>();
-                Activity reply = activity.CreateReply(activity.ChannelData.ToString());
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                Activity rep = activity.CreateReply(activity.ChannelData.ToString());
+                await connector.Conversations.ReplyToActivityAsync(rep);
                 //str.Add("hi");
                 foreach (var b in a)
                 {
