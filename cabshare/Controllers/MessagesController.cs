@@ -29,6 +29,7 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 Activity reply = activity.CreateReply(y);
                 await connector.Conversations.ReplyToActivityAsync(reply);
+                reply.Text = reply.Text.Substring(1);
                 await connector.Conversations.ReplyToActivityAsync(reply);
 
             }
@@ -82,6 +83,7 @@ namespace cabshare
                 foreach (var b in z)
                 {
                     answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
+                    
                 }
                 return answer;
 
