@@ -30,10 +30,10 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
                 //List<string> str = new List<string>();
-                string username = await GetUserName(activity);
+                //string username = await GetUserName(activity);
                 
-                Activity rep = activity.CreateReply("hi " + username);
-                await connector.Conversations.ReplyToActivityAsync(rep);
+                //Activity rep = activity.CreateReply("hi " + username);
+                //await connector.Conversations.ReplyToActivityAsync(rep);
                 
                 //str.Add("hi");
                 foreach (var b in a)
