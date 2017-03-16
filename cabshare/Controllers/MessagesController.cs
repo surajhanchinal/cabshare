@@ -77,7 +77,7 @@ namespace cabshare
                 var z = await DBquery.dataquery(y);
                 foreach(var b in z)
                 {
-                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}:{5}\n\r",b.name,b.origin.TrimEnd(),b.destination.TrimEnd(),b.date1.Value.ToShortDateString(),b.time1.Value.TotalHours.ToString(),b.time1.Value.TotalMinutes.ToString());
+                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r",b.name,b.origin.TrimEnd(),b.destination.TrimEnd(),b.date1.Value.ToShortDateString(),b.time1.ToString());
                 }
                 return answer;
 
