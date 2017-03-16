@@ -73,7 +73,7 @@ namespace cabshare
             using (var DB = new travelrecordEntities())
             {
                 Request user = new Request();
-                user.id = 4;
+                user.id = DB.Requests.Max(p => p.id) + 1;
                 user.name = username;
                 user.origin = data.origin;
                 user.destination = data.dest;
