@@ -23,20 +23,17 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                // calculate something for us to return
-                int length = (activity.Text ?? string.Empty).Length;
-                // return our reply to the user
-                Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
+                var replytext = ReplyCreate(activity);
+                string y = await ReplyCreate(activity);
+                Activity reply = activity.CreateReply(y);
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
             {
                 HandleSystemMessage(activity);
             }
-            var x = await GetEntityFromLUIS(activity.Text);
-            var y = await DBquery.Clean(x);
-            var z = await DBquery.dataquery(y);
-            var response = Request.CreateResponse(z);
+            string x = await ReplyCreate(activity);
+            var response = Request.CreateResponse(x);
             return response;
 
             /*using (travelrecordEntities DB = new travelrecordEntities())
@@ -65,7 +62,31 @@ namespace cabshare
             }
             return Data;
         }
+        private static async Task<string> ReplyCreate(Activity activity)
+        {
+            var x = await GetEntityFromLUIS(activity.Text);
+            if (x.topScoringIntent.intent == "Greeting")
+            {
+                return "hi";
+            }
+            else if(x.topScoringIntent.intent == "Search")
+            {
+                string answer = "";
+                var a = await GetEntityFromLUIS(activity.Text);
+                var y = await DBquery.Clean(a);
+                var z = await DBquery.dataquery(y);
+                foreach(var b in z)
+                {
+                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}:{5}\n\r",b.name,b.origin.TrimEnd(),b.destination.TrimEnd(),b.date1.Value.ToShortDateString(),b.time1.Value.TotalHours.ToString(),b.time1.Value.TotalMinutes.ToString());
+                }
+                return answer;
 
+            }
+            else
+            {
+                return "i dont get it";
+            }
+        }
         private Activity HandleSystemMessage(Activity message)
         {
             if (message.Type == ActivityTypes.DeleteUserData)
