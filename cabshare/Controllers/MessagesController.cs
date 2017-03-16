@@ -33,7 +33,7 @@ namespace cabshare
                 HandleSystemMessage(activity);
             }
             string x = await ReplyCreate(activity);
-            var response = Request.CreateResponse(x);
+            var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
 
             /*using (travelrecordEntities DB = new travelrecordEntities())
