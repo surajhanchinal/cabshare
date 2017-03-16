@@ -92,7 +92,7 @@ namespace cabshare
                 var z = await DBquery.dataquery(y);
                 foreach (var b in z)
                 {
-                    answer += String.Format("name: {0}  origin: {1}  destination: {2}  date: {3}  time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
+                    answer += String.Format("Name: {0} Origin: {1} Destination: {2} Date: {3} Time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
                 }
                 return answer;
 
@@ -102,7 +102,7 @@ namespace cabshare
                 cleandata cleaned = await DBquery.Clean(x);
                 if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
                 {
-                    return "write complete data. from, to, date and time";
+                    return "Provide Complete Travel Information";
                 }
                 else
                 {
@@ -135,11 +135,11 @@ namespace cabshare
                     }
 
                 }
-                return "Your requests are deleted";
+                return "All your Requests are now Deleted";
             }
             else
             {
-                return "i dont get it";
+                return "Sorry I didn't get you";
             }
         }
         private static async Task<string> GetUserName(Activity activity)
