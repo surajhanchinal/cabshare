@@ -29,6 +29,7 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 Activity reply = activity.CreateReply(y);
                 await connector.Conversations.ReplyToActivityAsync(reply);
+                await connector.Conversations.ReplyToActivityAsync(reply);
 
             }
             else
