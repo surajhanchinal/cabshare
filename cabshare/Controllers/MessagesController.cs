@@ -26,12 +26,13 @@ namespace cabshare
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 
                 
-                string y = await ReplyCreate(activity);
-                Activity reply = activity.CreateReply(y);
-                await connector.Conversations.ReplyToActivityAsync(reply);
-                reply.Text = reply.Text.Substring(1);
-                await connector.Conversations.ReplyToActivityAsync(reply);
-
+                List<string> y = await ReplyCreate(activity);
+                Activity reply = activity.CreateReply(y[0]);
+                foreach (var b in y)
+                {
+                    reply.Text = b;
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
             }
             else
             {
@@ -67,22 +68,24 @@ namespace cabshare
             }
             return Data;
         }
-        private static async Task<string> ReplyCreate(Activity activity)
+        private static async Task<List<string>> ReplyCreate(Activity activity)
         {
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
-                return "hi";
+                List<string> str = null;
+                str.Add("hi");
+                return str;
             }
             else if (x.topScoringIntent.intent == "Search")
             {
-                string answer = "";
+                List<string> answer = null;
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
                 foreach (var b in z)
                 {
-                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
+                    answer.Add(String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString()));
                     
                 }
                 return answer;
@@ -90,11 +93,15 @@ namespace cabshare
             }
             else if (x.topScoringIntent.intent == "Add")
             {
-                return "Add";
+                List<string> str = null;
+                str.Add("Add");
+                return str;
             }
             else
             {
-                return "i dont get it";
+                List<string> str = null;
+                str.Add("i dont get it");
+                return str;
             }
         }
         private Activity HandleSystemMessage(Activity message)
