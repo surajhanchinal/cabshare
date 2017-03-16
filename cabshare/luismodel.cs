@@ -28,8 +28,8 @@ namespace cabshare
     }
     public class Resolution
     {
-        public DateTime? date;
-        public DateTime? time;
+        public string date;
+        public string time;
         
     }
     

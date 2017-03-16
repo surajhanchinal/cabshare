@@ -19,12 +19,12 @@ namespace cabshare
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
+            
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 // calculate something for us to return
                 int length = (activity.Text ?? string.Empty).Length;
-
                 // return our reply to the user
                 Activity reply = activity.CreateReply($"You sent {activity.Text} which was {length} characters");
                 await connector.Conversations.ReplyToActivityAsync(reply);
@@ -33,8 +33,19 @@ namespace cabshare
             {
                 HandleSystemMessage(activity);
             }
-            var response = Request.CreateResponse(HttpStatusCode.OK);
+            var x = await GetEntityFromLUIS(activity.Text);
+            var y = await DBquery.Clean(x);
+            var z = await DBquery.dataquery(y);
+            var response = Request.CreateResponse(z);
             return response;
+
+            /*using (travelrecordEntities DB = new travelrecordEntities())
+            {
+                var z = (from b in DB.Requests select b).ToList();
+                
+            }*/
+                
+            
         }
 
         private static async Task<LUIS> GetEntityFromLUIS(string Query)

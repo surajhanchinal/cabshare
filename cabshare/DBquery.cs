@@ -2,27 +2,60 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using System.Threading.Tasks;
+using System.Globalization;
 namespace cabshare
 {
     public class DBquery
     {
-        public static cleandata Clean(LUIS data)
+        public static async Task<cleandata> Clean(LUIS data)
         {
             cleandata clean = new cleandata();
-            clean.origin = data.entities.Where(b => b.type == "location::fromlocation").FirstOrDefault().entity;
-            clean.dest = data.entities.Where(b => b.type == "location::tolocation").FirstOrDefault().entity;
-            clean.date = data.entities.Where(b => (b.type == "builtin.datetime.date" && b.resolution.time == null)).FirstOrDefault().resolution.date;
-            clean.time = data.entities.Where(b => (b.type == "builtin.datetime.date" && b.resolution.date == null)).FirstOrDefault().resolution.time;
+            try
+            {
+                clean.origin = data.entities.Where(b => b.type == "location::fromlocation").FirstOrDefault().entity;
+            }
+            catch {
+                clean.origin = "";
+            }
+            try
+            {
+                clean.dest = data.entities.Where(b => b.type == "location::tolocation").FirstOrDefault().entity;
+                
+            }
+            catch
+            {
+                clean.dest = "";
+            }
+            try
+            {
+                string str = data.entities.Where(b => (b.type == "builtin.datetime.date")).FirstOrDefault().resolution.date.Replace("XXXX", "2017");
+                clean.date = Convert.ToDateTime(str);
+                
+            }
+            catch
+            {
+                clean.date = null;
+            }
+            try
+            {
+                if(DateTime.TryParseExact(data.entities.Where(b => (b.type == "builtin.datetime.time")).FirstOrDefault().resolution.time.Substring(1),"HH", CultureInfo.InvariantCulture,DateTimeStyles.None,out clean.time)) { }
+                else if(DateTime.TryParseExact(data.entities.Where(b => (b.type == "builtin.datetime.time")).FirstOrDefault().resolution.time.Substring(1), "HH:mm", CultureInfo.InvariantCulture, DateTimeStyles.None, out clean.time)) { }
+                else if(DateTime.TryParseExact(data.entities.Where(b => (b.type == "builtin.datetime.time")).FirstOrDefault().resolution.time.Substring(1), "HH:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out clean.time)) { }
+                //clean.time = DateTime.ParseExact(data.entities.Where(b => (b.type == "builtin.datetime.time")).FirstOrDefault().resolution.time.Substring(1), "HH", CultureInfo.InvariantCulture);
+            }
+            catch
+            {
+                return clean;
+            }
             return clean;
         }
-        public static List<Request>  dataquery(cleandata data)
+        public static async Task<List<Request>>  dataquery(cleandata data)
         {
-            /*List<queryout> matchlist = new List<queryout>();
-            return matchlist;*/
+            
             using (var DB = new travelrecordEntities())
             {
-                var match = (from b in DB.Requests where (b.origin == data.origin || data.origin == null) && (b.destination == data.dest || data.dest == null) && (b.date1 == data.date || data.date == null) && (b.time1 == data.time.Value.TimeOfDay || data.time == null) select b).ToList();
+                var match = (from b in DB.Requests where (b.origin == data.origin || data.origin == "") && (b.destination == data.dest || data.dest == "") && (b.date1 == data.date || data.date == null) && (b.time1 == data.time.TimeOfDay || data.time == default(DateTime)) select b).ToList();
                 return match;
                 
             }

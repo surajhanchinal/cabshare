@@ -7,10 +7,10 @@ namespace cabshare
 {
     public class cleandata
     {
-        public string origin;
-        public string dest;
+        public string origin = "";
+        public string dest = "";
         public DateTime? date;
-        public DateTime? time;
+        public DateTime time;
        
     }
 }
