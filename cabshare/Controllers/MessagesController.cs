@@ -96,7 +96,7 @@ namespace cabshare
                 }
                 if (answer == "")
                 {
-                    return "No Matches Found,You can add your request";
+                    return "No matches found. You can add your request.";
                 }
                 else return answer;
 
@@ -106,7 +106,7 @@ namespace cabshare
                 cleandata cleaned = await DBquery.Clean(x);
                 if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
                 {
-                    return "Provide Complete Travel Information";
+                    return "Provide Complete Travel Information.";
                 }
                 else
                 {
