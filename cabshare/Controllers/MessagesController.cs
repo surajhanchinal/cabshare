@@ -81,7 +81,8 @@ namespace cabshare
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
-                return "hi " + GetUserName(activity);
+                string y = await GetUserName(activity);
+                return "hi " + y;
             }
             else if (x.topScoringIntent.intent == "Search")
             {
