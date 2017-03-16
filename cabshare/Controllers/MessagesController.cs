@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace cabshare
 {
@@ -25,7 +26,7 @@ namespace cabshare
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 string y = await ReplyCreate(activity);
-                Activity reply = activity.CreateReply((y.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))[0]);
+                Activity reply = activity.CreateReply(Regex.Split(y, "\r\n")[0]);
                 await connector.Conversations.ReplyToActivityAsync(reply);
             }
             else
@@ -77,7 +78,7 @@ namespace cabshare
                 var z = await DBquery.dataquery(y);
                 foreach (var b in z)
                 {
-                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
+                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
                 }
                 return answer;
 
