@@ -32,7 +32,7 @@ namespace cabshare
             {
                 HandleSystemMessage(activity);
             }
-            string x = await ReplyCreate(activity);
+            //string x = await ReplyCreate(activity);
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
 
