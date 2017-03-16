@@ -25,12 +25,14 @@ namespace cabshare
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 List<string> y = await ReplyCreate(activity);
-                foreach (var b in y)
+                Activity reply = activity.CreateReply(y[0]);
+                await connector.Conversations.ReplyToActivityAsync(reply);
+                /*foreach (var b in y)
                 {
                     Activity reply = activity.CreateReply(b);
                     await connector.Conversations.ReplyToActivityAsync(reply);
-                }
-                
+                }*/
+
             }
             else
             {
