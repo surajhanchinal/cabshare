@@ -82,7 +82,7 @@ namespace cabshare
             if (x.topScoringIntent.intent == "Greeting")
             {
                 string y = await GetUserName(activity);
-                return "hi " + y;
+                return "Hey " + y + "!";
             }
             else if (x.topScoringIntent.intent == "Search")
             {
@@ -94,7 +94,11 @@ namespace cabshare
                 {
                     answer += String.Format("Name: {0} Origin: {1} Destination: {2} Date: {3} Time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
                 }
-                return answer;
+                if (answer == "")
+                {
+                    return "No Matches Found,You can add your request";
+                }
+                else return answer;
 
             }
             else if (x.topScoringIntent.intent == "Add")
