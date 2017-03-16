@@ -23,7 +23,7 @@ namespace cabshare
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            
+
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
@@ -31,8 +31,10 @@ namespace cabshare
                 string[] a = Regex.Split(y, "\r\n");
                 //List<string> str = new List<string>();
                 string username = await GetUserName(activity);
+                
                 Activity rep = activity.CreateReply("hi " + username);
                 await connector.Conversations.ReplyToActivityAsync(rep);
+                
                 //str.Add("hi");
                 foreach (var b in a)
                 {
@@ -96,8 +98,12 @@ namespace cabshare
             }
             else if (x.topScoringIntent.intent == "Add")
             {
-                
-                return "Add";
+
+
+            }
+            else if (x.topScoringIntent.intent == "Show")
+            {
+
             }
             else
             {
