@@ -9,6 +9,8 @@ using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Json.NET;
+using Newtonsoft.Json.Linq;
 
 namespace cabshare
 {
@@ -28,7 +30,8 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
                 //List<string> str = new List<string>();
-                Activity rep = activity.CreateReply(activity.ChannelData.ToString());
+                string username = await GetUserName(activity);
+                Activity rep = activity.CreateReply(username);
                 await connector.Conversations.ReplyToActivityAsync(rep);
                 //str.Add("hi");
                 foreach (var b in a)
@@ -99,6 +102,29 @@ namespace cabshare
             else
             {
                 return "i dont get it";
+            }
+        }
+        private static async Task<string> GetUserName(Activity activity)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string RequestURI = "https://graph.facebook.com/v2.6/<user_id>?access_token=EAAeMnBYhrJ8BADSGKDOAnZB6apRMAbDLAiBk5fN1PMm1mtbFCFCHj3LpGyvF8oqqQvUTsmJWYSPtZC6DceXQLo2w5RCPW97bk1O2T1zZAACDY9XZBooyMWwBjXtZAi62ZBNOC8WuYpUI28TZAsurtGJVXkZAqLy8ETHadExHRZBAnoAZDZD";
+                var obj = JObject.Parse(activity.ChannelData.ToString());
+                string userid = (obj["sender"]["id"]).ToString();
+                RequestURI = RequestURI.Replace("<user_id>", userid);
+                HttpResponseMessage msg = await client.GetAsync(RequestURI);
+
+                if (msg.IsSuccessStatusCode)
+                {
+                    var JsonDataResponse = await msg.Content.ReadAsStringAsync();
+                    var Data = JObject.Parse(JsonDataResponse);
+                    string name = Data["first_name"] + " " + Data["last_name"];
+                    return name;
+                }
+                else
+                {
+                    return "";
+                }
             }
         }
         private Activity HandleSystemMessage(Activity message)
