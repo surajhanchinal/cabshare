@@ -113,7 +113,14 @@ namespace cabshare
             }
             else if (x.topScoringIntent.intent == "Show")
             {
-                return "show";
+                string answer = "";
+                string y = await GetUserName(activity);
+                var z = await DBquery.showdata(y);
+                foreach (var b in z)
+                {
+                    answer += String.Format("name: {0}  origin: {1}  destination: {2}  date: {3}  time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
+                }
+                return answer;
             }
             else
             {
