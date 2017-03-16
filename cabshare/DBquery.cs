@@ -73,6 +73,7 @@ namespace cabshare
             using (var DB = new travelrecordEntities())
             {
                 Request user = new Request();
+                user.id = 4;
                 user.name = username;
                 user.origin = data.origin;
                 user.destination = data.dest;
@@ -81,7 +82,7 @@ namespace cabshare
                 DB.Requests.Add(user);
                 await DB.SaveChangesAsync();
             }
-            return "request added";
+            return "Request added";
         }
     }
 }
