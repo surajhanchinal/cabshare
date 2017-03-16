@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace cabshare
 {
@@ -23,10 +24,13 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                var replytext = ReplyCreate(activity);
-                string y = await ReplyCreate(activity);
-                Activity reply = activity.CreateReply(y);
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                List<string> y = await ReplyCreate(activity);
+                foreach (var b in y)
+                {
+                    Activity reply = activity.CreateReply(b);
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                }
+                
             }
             else
             {
@@ -62,29 +66,39 @@ namespace cabshare
             }
             return Data;
         }
-        private static async Task<string> ReplyCreate(Activity activity)
+        private static async Task<List<string>> ReplyCreate(Activity activity)
         {
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
-                return "hi";
+                List<string> str = null;
+                str.Add("hi");
+                return str;
             }
-            else if(x.topScoringIntent.intent == "Search")
+            else if (x.topScoringIntent.intent == "Search")
             {
-                string answer = "";
+                List<string> answer = null;
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
-                foreach(var b in z)
+                foreach (var b in z)
                 {
-                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r",b.name,b.origin.TrimEnd(),b.destination.TrimEnd(),b.date1.Value.ToShortDateString(),b.time1.ToString());
+                    answer.Add(String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString()));
                 }
                 return answer;
 
             }
+            else if (x.topScoringIntent.intent == "Add")
+            {
+                List<string> str = null;
+                str.Add("Add");
+                return str;
+            }
             else
             {
-                return "i dont get it";
+                List<string> str = null;
+                str.Add("heyoo");
+                return str;
             }
         }
         private Activity HandleSystemMessage(Activity message)
