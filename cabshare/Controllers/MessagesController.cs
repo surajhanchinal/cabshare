@@ -27,13 +27,13 @@ namespace cabshare
                 
                 
                 List<string> y = await ReplyCreate(activity);
-                Activity reply = activity.CreateReply(y[0]);
+                Activity reply = activity.CreateReply(y.ElementAtOrDefault(0));
                 await connector.Conversations.ReplyToActivityAsync(reply);
-                foreach (var b in y)
+                /*foreach (var b in y)
                 {
                     reply.Text = b;
                     await connector.Conversations.ReplyToActivityAsync(reply);
-                 }
+                 }*/
             }
             else
             {
