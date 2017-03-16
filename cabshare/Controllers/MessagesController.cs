@@ -24,14 +24,11 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                List<string> y = await ReplyCreate(activity);
-                Activity reply = activity.CreateReply(y[0]);
+                
+                
+                string y = await ReplyCreate(activity);
+                Activity reply = activity.CreateReply(y);
                 await connector.Conversations.ReplyToActivityAsync(reply);
-                /*foreach (var b in y)
-                {
-                    Activity reply = activity.CreateReply(b);
-                    await connector.Conversations.ReplyToActivityAsync(reply);
-                }*/
 
             }
             else
@@ -68,39 +65,33 @@ namespace cabshare
             }
             return Data;
         }
-        private static async Task<List<string>> ReplyCreate(Activity activity)
+        private static async Task<string> ReplyCreate(Activity activity)
         {
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
-                List<string> str = null;
-                str.Add("hi");
-                return str;
+                return "hi";
             }
             else if (x.topScoringIntent.intent == "Search")
             {
-                List<string> answer = null;
+                string answer = "";
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
                 foreach (var b in z)
                 {
-                    answer.Add(String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString()));
+                    answer += String.Format("name : {0}--origin : {1}--destination : {2}--date : {3}--time : {4}\n\r", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
                 }
                 return answer;
 
             }
             else if (x.topScoringIntent.intent == "Add")
             {
-                List<string> str = null;
-                str.Add("Add");
-                return str;
+                return "Add";
             }
             else
             {
-                List<string> str = null;
-                str.Add("heyoo");
-                return str;
+                return "i dont get it";
             }
         }
         private Activity HandleSystemMessage(Activity message)
