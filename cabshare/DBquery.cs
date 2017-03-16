@@ -60,12 +60,27 @@ namespace cabshare
 
             }
         }
-        public static async Task<List<Request>> showdata(cleandata data)
+        /*public static async Task<List<Request>> showdata(cleandata data)
         {
             using (var DB = new travelrecordEntities())
             {
-                
+
             }
+        }*/
+        public static async Task<string> addquery(cleandata data, string username)
+        {
+            using (var DB = new travelrecordEntities())
+            {
+                Request user = new Request();
+                user.name = username;
+                user.origin = data.origin;
+                user.destination = data.dest;
+                user.date1 = data.date;
+                user.time1 = data.time.TimeOfDay;
+                DB.Requests.Add(user);
+                await DB.SaveChangesAsync();
+            }
+            return "request added";
         }
     }
 }

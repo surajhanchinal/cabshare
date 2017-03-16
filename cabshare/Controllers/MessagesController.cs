@@ -81,7 +81,7 @@ namespace cabshare
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
-                return "hi";
+                return "hi " + GetUserName(activity);
             }
             else if (x.topScoringIntent.intent == "Search")
             {
@@ -98,12 +98,21 @@ namespace cabshare
             }
             else if (x.topScoringIntent.intent == "Add")
             {
-
-
+                cleandata cleaned = await DBquery.Clean(x);
+                if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
+                {
+                    return "write complete data. from, to, date and time";
+                }
+                else
+                {
+                    var a = await GetUserName(activity);
+                    string y = await DBquery.addquery(cleaned, a);
+                    return y;
+                }
             }
             else if (x.topScoringIntent.intent == "Show")
             {
-
+                return "show";
             }
             else
             {
