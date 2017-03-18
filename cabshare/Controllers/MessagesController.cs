@@ -14,7 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace cabshare
 {
-    [BotAuthentication]
+    //[BotAuthentication]
     public class MessagesController : ApiController
     {
         /// <summary>
