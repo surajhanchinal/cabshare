@@ -32,8 +32,8 @@ namespace cabshare
                 //List<string> str = new List<string>();
                 //string username = await GetUserName(activity);
                 
-                //Activity rep = activity.CreateReply("hi " + username);
-                //await connector.Conversations.ReplyToActivityAsync(rep);
+                Activity rep = activity.CreateReply(activity.ChannelData.ToString());
+                await connector.Conversations.ReplyToActivityAsync(rep);
                 
                 //str.Add("hi");
                 foreach (var b in a)
