@@ -150,7 +150,7 @@ namespace cabshare
         {
             using (HttpClient client = new HttpClient())
             {
-                string RequestURI = "https://graph.facebook.com/v2.6/<user_id>?access_token=EAAeMnBYhrJ8BADSGKDOAnZB6apRMAbDLAiBk5fN1PMm1mtbFCFCHj3LpGyvF8oqqQvUTsmJWYSPtZC6DceXQLo2w5RCPW97bk1O2T1zZAACDY9XZBooyMWwBjXtZAi62ZBNOC8WuYpUI28TZAsurtGJVXkZAqLy8ETHadExHRZBAnoAZDZD";
+                string RequestURI = "https://graph.facebook.com/v2.6/<user_id>?access_token=EAAeMnBYhrJ8BAMxK2ahazA04uNVNXMuEFTCF3ZC0p9w9ByEGj512nNCq8QA4nKldaBUdH5fiUKO6nZAIwoAZASEoa5s7MB9lFpJks6r0utrEzAfTV00RRZBIDkY3KxQuvcwej3eHBhCT6OpohXJxy0gZBi8Az8pAcclZBdfgPePgZDZD";
                 var obj = JObject.Parse(activity.ChannelData.ToString());
                 string userid = (obj["sender"]["id"]).ToString();
                 RequestURI = RequestURI.Replace("<user_id>", userid);
