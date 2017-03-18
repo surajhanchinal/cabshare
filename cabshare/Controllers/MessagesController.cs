@@ -168,9 +168,10 @@ namespace cabshare
                 if (msg.IsSuccessStatusCode)
                 {
                     var JsonDataResponse = await msg.Content.ReadAsStringAsync();
-                    var Data = JObject.Parse(JsonDataResponse);
+                    
                     try
                     {
+                        var Data = JObject.Parse(JsonDataResponse);
                         string name = Data["first_name"] + " " + Data["last_name"];
                         return name;
                     }
