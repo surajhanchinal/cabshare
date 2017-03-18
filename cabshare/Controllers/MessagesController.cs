@@ -129,10 +129,9 @@ namespace cabshare
             else if (x.topScoringIntent.intent == "Delete")
             {
                 string y = await GetUserName(activity);
-                var cleaned = await  DBquery.Clean(x);
                 using (travelrecordEntities DB = new travelrecordEntities())
                 {
-                    var match = (from b in DB.Requests where (b.origin == cleaned.origin || cleaned.origin == "") && (b.destination == cleaned.dest || cleaned.dest == "") && (b.date1 == cleaned.date || cleaned.date == null) && (b.time1 == cleaned.time.TimeOfDay || cleaned.time == default(DateTime)) select b).ToList();
+                    var match = (from b in DB.Requests where (b.name == y) select b).ToList();
                     foreach (var b in match)
                     {
                         DB.Requests.Remove(b);
