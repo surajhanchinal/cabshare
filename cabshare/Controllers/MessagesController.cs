@@ -73,6 +73,7 @@ namespace cabshare
                     var JsonDataResponse = await msg.Content.ReadAsStringAsync();
                     Data = JsonConvert.DeserializeObject<LUIS>(JsonDataResponse);
                 }
+
             }
             return Data;
         }
@@ -152,7 +153,15 @@ namespace cabshare
             {
                 string RequestURI = "https://graph.facebook.com/v2.6/<user_id>?access_token=EAAeMnBYhrJ8BAMxK2ahazA04uNVNXMuEFTCF3ZC0p9w9ByEGj512nNCq8QA4nKldaBUdH5fiUKO6nZAIwoAZASEoa5s7MB9lFpJks6r0utrEzAfTV00RRZBIDkY3KxQuvcwej3eHBhCT6OpohXJxy0gZBi8Az8pAcclZBdfgPePgZDZD";
                 var obj = JObject.Parse(activity.ChannelData.ToString());
-                string userid = (obj["sender"]["id"]).ToString();
+                string userid;
+                try
+                {
+                    userid = (obj["sender"]["id"]).ToString();
+                }
+                catch
+                {
+                    userid = "";
+                }
                 RequestURI = RequestURI.Replace("<user_id>", userid);
                 HttpResponseMessage msg = await client.GetAsync(RequestURI);
 
