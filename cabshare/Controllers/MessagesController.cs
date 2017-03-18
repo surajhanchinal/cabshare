@@ -169,8 +169,15 @@ namespace cabshare
                 {
                     var JsonDataResponse = await msg.Content.ReadAsStringAsync();
                     var Data = JObject.Parse(JsonDataResponse);
-                    string name = Data["first_name"] + " " + Data["last_name"];
-                    return name;
+                    try
+                    {
+                        string name = Data["first_name"] + " " + Data["last_name"];
+                        return name;
+                    }
+                    catch
+                    {
+                        return "";
+                    }
                 }
                 else
                 {
