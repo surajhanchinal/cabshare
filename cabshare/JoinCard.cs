@@ -28,7 +28,7 @@ namespace cabshare
                 List<CardAction> cardButtons = new List<CardAction>();
                 CardAction namebutton = new CardAction()
                 {
-                    Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+                    Value = "https://www.facebook.com/100003163800994",
                     Type = "openUrl",
                     Title = b.name
                 };
