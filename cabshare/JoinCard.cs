@@ -36,7 +36,7 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = "this text will contain the details of the carpool",
+                    Text = card,
                     Images = cardImages,
                     Buttons = cardButtons
                 };
