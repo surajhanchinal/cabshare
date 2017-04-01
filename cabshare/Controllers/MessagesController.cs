@@ -33,10 +33,23 @@ namespace cabshare
                 //string username = await GetUserName(activity);
                 
                 Activity rep = activity.CreateReply("hey bitch");
-                var repl = JObject.Parse(rep.ToString());
-                await connector.Conversations.ReplyToActivityAsync(rep);
-                Activity rest = activity.CreateReply(repl.ToString());
-               // await connector.Conversations.ReplyToActivityAsync(rest); 
+                CardAction button = new CardAction()
+                {
+                    Type = "imBack",
+                    Title = "click me!",
+                    Value = "data"
+
+                };
+                List<CardAction> buttons = new List<CardAction>();
+                buttons.Add(button);
+                HeroCard hero = new HeroCard()
+                {
+                    Text = "I'm a hero card bitch",
+                    Buttons = buttons
+                };
+               
+                rep.Attachments.Add(hero.ToAttachment());
+                await connector.Conversations.ReplyToActivityAsync(rep);               
                 // make the reply id(client id public so that i can create conversations from elsewhere as well)
 
                 foreach (var b in a)
