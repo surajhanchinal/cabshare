@@ -145,6 +145,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="cleandata.cs" />
     <Compile Include="DBquery.cs" />
+    <Compile Include="JoinCard.cs" />
     <Compile Include="luismodel.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Global.asax.cs">

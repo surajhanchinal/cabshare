@@ -23,11 +23,13 @@ namespace cabshare
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-
+            ConnectorClient connector1 = new ConnectorClient(new Uri(activity.ServiceUrl));
+            Activity channel1 = activity.CreateReply(activity.Type +"    " +activity.ChannelData.ToString());
+            await connector1.Conversations.ReplyToActivityAsync(channel1);
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                string y = await ReplyCreate(activity);
+                string y = await ReplyCreate(activity,connector);
                 string[] a = Regex.Split(y, "\r\n");
                 Activity channel = activity.CreateReply(activity.ChannelData.ToString());
                 await connector.Conversations.ReplyToActivityAsync(channel);
@@ -95,7 +97,7 @@ namespace cabshare
             }
             return Data;
         }
-        private static async Task<string> ReplyCreate(Activity activity)
+        private static async Task<string> ReplyCreate(Activity activity,ConnectorClient connector)
         {
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
