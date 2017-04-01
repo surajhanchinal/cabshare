@@ -35,8 +35,8 @@ namespace cabshare
                     await connector.Conversations.ReplyToActivityAsync(reply);
                 }
                 Activity replyToConversation = activity.CreateReply("Should go to conversation, with a hero card");
-                replyToConversation.Recipient = activity.From;
-                replyToConversation.Type = "message";
+                //replyToConversation.Recipient = activity.From;
+                //replyToConversation.Type = "message";
                 replyToConversation.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
                 cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/70/64/Q05kSm.jpg"));
@@ -58,7 +58,7 @@ namespace cabshare
                 };
                 Attachment plAttachment = plCard.ToAttachment();
                 replyToConversation.Attachments.Add(plAttachment);
-                await connector.Conversations.SendToConversationAsync(replyToConversation);
+                await connector.Conversations.ReplyToActivityAsync(replyToConversation);
             }
             else
             {
