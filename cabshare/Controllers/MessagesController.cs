@@ -27,9 +27,11 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+
                 await JoinCard.show(activity, connector, activity.ChannelData.ToString());
                 await ReplyCreate(activity, connector);
                 
+
                 
                 
             }
