@@ -38,7 +38,7 @@ namespace cabshare
                     Activity reply = activity.CreateReply(b);
                     await connector.Conversations.ReplyToActivityAsync(reply);
                 }
-                Activity replyToConversation = new Activity();
+                Activity replyToConversation = activity.CreateReply("");
                 
                 replyToConversation.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
