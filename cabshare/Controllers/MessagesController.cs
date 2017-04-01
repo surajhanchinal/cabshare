@@ -29,6 +29,8 @@ namespace cabshare
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
+                Activity channel = activity.CreateReply(activity.ChannelData.ToString());
+                await connector.Conversations.ReplyToActivityAsync(channel);
                 foreach (var b in a)
                 {
                     Activity reply = activity.CreateReply(b);
