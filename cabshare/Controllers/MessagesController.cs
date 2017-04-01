@@ -96,14 +96,18 @@ namespace cabshare
                 }
                 else
                 {
+                    // ask for max no. people
+                    //Activity reply = activity.CreateReply("Please specify the number of seats");
+                    //await connector.Conversations.ReplyToActivityAsync(reply);
                     var a = await GetUserName(activity);
-                    string y = await DBquery.addquery(cleaned, a);
+                    var b = await GetFBid(activity);
+                    string y = await DBquery.addquery(cleaned, a,activity.From.Id,b);
                     return await JoinCard.show(activity, connector, y);
                 }
             }
             else if (x.topScoringIntent.intent == "Show")
             {
-                string answer = "";
+                
                 string y = await GetUserName(activity);
                 var z = await DBquery.showdata(y);
                 await JoinCard.Cards(activity, connector,z);
@@ -156,6 +160,54 @@ namespace cabshare
                         var Data = JObject.Parse(JsonDataResponse);
                         string name = Data["first_name"] + " " + Data["last_name"];
                         return name;
+                    }
+                    catch
+                    {
+                        return "";
+                    }
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
+        private static async Task<string> GetFBid(Activity activity)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                string RequestURI = "https://graph.facebook.com/v2.6/<user_id>?access_token=EAAeMnBYhrJ8BAMxK2ahazA04uNVNXMuEFTCF3ZC0p9w9ByEGj512nNCq8QA4nKldaBUdH5fiUKO6nZAIwoAZASEoa5s7MB9lFpJks6r0utrEzAfTV00RRZBIDkY3KxQuvcwej3eHBhCT6OpohXJxy0gZBi8Az8pAcclZBdfgPePgZDZD";
+                var obj = JObject.Parse(activity.ChannelData.ToString());
+                string userid;
+                try
+                {
+                    userid = (obj["sender"]["id"]).ToString();
+                }
+                catch
+                {
+                    userid = "";
+                }
+                RequestURI = RequestURI.Replace("<user_id>", userid);
+                HttpResponseMessage msg = await client.GetAsync(RequestURI);
+
+                if (msg.IsSuccessStatusCode)
+                {
+                    var JsonDataResponse = await msg.Content.ReadAsStringAsync();
+
+                    try
+                    {
+                        var Data = JObject.Parse(JsonDataResponse);
+                        string name = Data["profile_pic"] + "";
+                        var results = new List<string>();
+                        //var subjectString = "My Name is #P_NAME# and \r\n I am #P_AGE# years old";
+                        Regex regexObj = new Regex("_.+?_");
+                        Match matchResults = regexObj.Match(name);
+                        while (matchResults.Success)
+                        {
+                            results.Add(matchResults.ToString().Replace("#", ""));
+                            matchResults = matchResults.NextMatch();
+                        }
+                        return results[0];
                     }
                     catch
                     {

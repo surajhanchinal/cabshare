@@ -9,6 +9,7 @@ namespace cabshare
     {
         public string origin = "";
         public string dest = "";
+        public int noop = 3;
         public DateTime? date;
         public DateTime time;
        

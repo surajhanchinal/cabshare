@@ -20,7 +20,7 @@ namespace cabshare
         {
             foreach(var b in requests)
             {
-                string card = String.Format("DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\n", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd());
+                string card = String.Format("DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\nVACANCY : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(),b.MAXNO);
                 Activity reply = activity.CreateReply("");
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
@@ -28,7 +28,7 @@ namespace cabshare
                 List<CardAction> cardButtons = new List<CardAction>();
                 CardAction namebutton = new CardAction()
                 {
-                    Value = "https://www.facebook.com/100003163800994",
+                    Value = "https://www.facebook.com/"+b.fbid,
                     Type = "openUrl",
                     Title = b.name
                 };
