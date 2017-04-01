@@ -34,8 +34,10 @@ namespace cabshare
                 
                 Activity rep = activity.CreateReply(activity.ChannelData.ToString());
                 await connector.Conversations.ReplyToActivityAsync(rep);
+                Activity repl = activity.CreateReply(rep.ChannelData.ToString());
+                await connector.Conversations.ReplyToActivityAsync(repl);
                 // make the reply id(client id public so that i can create conversations from elsewhere as well)
-                
+
                 foreach (var b in a)
                 {
                     Activity reply = activity.CreateReply(b);
