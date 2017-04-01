@@ -20,12 +20,19 @@ namespace cabshare
         {
             foreach(var b in requests)
             {
-                string card = String.Format(" DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\nMEMBERS :", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd());
+                string card = String.Format("DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\n", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd());
                 Activity reply = activity.CreateReply("");
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
 
                 List<CardAction> cardButtons = new List<CardAction>();
+                CardAction namebutton = new CardAction()
+                {
+                    Type = "openURL",
+                    Title = b.name,
+                    Value = "www.facebook.com"
+                };
+                cardButtons.Add(namebutton);
                 CardAction plButton = new CardAction()
                 {
                     Value = JsonConvert.SerializeObject(b),
