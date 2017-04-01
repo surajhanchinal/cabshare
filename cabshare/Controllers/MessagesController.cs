@@ -29,31 +29,6 @@ namespace cabshare
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
-                //List<string> str = new List<string>();
-                //string username = await GetUserName(activity);
-                
-                Activity rep = activity.CreateReply("hey bitch");
-                CardAction button = new CardAction()
-                {
-                    Type = "imBack",
-                    Title = "click me!",
-                    Value = "data"
-
-                };
-                List<CardAction> buttons = new List<CardAction>();
-                buttons.Add(button);
-                HeroCard hero = new HeroCard()
-                {
-                    Title = "hero",
-                    Subtitle = "zero",
-                    Text = "I'm a hero card bitch",
-                    Buttons = buttons
-                };
-               
-                rep.Attachments.Add(hero.ToAttachment());
-                await connector.Conversations.ReplyToActivityAsync(rep);               
-                // make the reply id(client id public so that i can create conversations from elsewhere as well)
-
                 foreach (var b in a)
                 {
                     Activity reply = activity.CreateReply(b);
