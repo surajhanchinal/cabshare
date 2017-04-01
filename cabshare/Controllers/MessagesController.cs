@@ -39,8 +39,8 @@ namespace cabshare
                 //replyToConversation.Type = "message";
                 replyToConversation.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
-                cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/70/64/Q05kSm.jpg"));
-                cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/0/48/BcGWph.jpg"));
+                //cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/70/64/Q05kSm.jpg"));
+                //cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/0/48/BcGWph.jpg"));
                 List<CardAction> cardButtons = new List<CardAction>();
                 CardAction plButton = new CardAction()
                 {
@@ -53,6 +53,7 @@ namespace cabshare
                 {
                     Title = "I'm a hero card",
                     Subtitle = "Pig Latin Wikipedia Page",
+                    Text = "hey, i'm a hero card bitch",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
