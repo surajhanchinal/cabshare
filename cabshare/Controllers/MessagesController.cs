@@ -30,13 +30,13 @@ namespace cabshare
                 string y = await ReplyCreate(activity);
                 string[] a = Regex.Split(y, "\r\n");
                 //List<string> str = new List<string>();
-                string username = await GetUserName(activity);
+                //string username = await GetUserName(activity);
                 
                 Activity rep = activity.CreateReply("hey bitch");
-                var repl = JObject.Parse(rep.ChannelData.ToString());
+                //var repl = JObject.Parse(rep.ChannelData.ToString());
                 await connector.Conversations.ReplyToActivityAsync(rep);
-                Activity rest = activity.CreateReply(repl.ToString());
-                await connector.Conversations.ReplyToActivityAsync(rest); 
+                //Activity rest = activity.CreateReply(repl.ToString());
+               // await connector.Conversations.ReplyToActivityAsync(rest); 
                 // make the reply id(client id public so that i can create conversations from elsewhere as well)
 
                 foreach (var b in a)
