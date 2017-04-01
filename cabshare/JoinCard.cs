@@ -28,9 +28,9 @@ namespace cabshare
                 List<CardAction> cardButtons = new List<CardAction>();
                 CardAction namebutton = new CardAction()
                 {
-                    Type = "openURL",
-                    Title = b.name,
-                    Value = "www.facebook.com"
+                    Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+                    Type = "openUrl",
+                    Title = "WikiPedia Page"
                 };
                 cardButtons.Add(namebutton);
                 CardAction plButton = new CardAction()
