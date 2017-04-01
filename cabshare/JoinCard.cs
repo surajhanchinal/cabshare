@@ -30,7 +30,7 @@ namespace cabshare
                 {
                     Value = "https://en.wikipedia.org/wiki/Pig_Latin",
                     Type = "openUrl",
-                    Title = "WikiPedia Page"
+                    Title = b.name
                 };
                 cardButtons.Add(namebutton);
                 CardAction plButton = new CardAction()
