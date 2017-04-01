@@ -34,6 +34,31 @@ namespace cabshare
                     Activity reply = activity.CreateReply(b);
                     await connector.Conversations.ReplyToActivityAsync(reply);
                 }
+                Activity replyToConversation = activity.CreateReply("Should go to conversation, with a hero card");
+                replyToConversation.Recipient = activity.From;
+                replyToConversation.Type = "message";
+                replyToConversation.Attachments = new List<Attachment>();
+                List<CardImage> cardImages = new List<CardImage>();
+                cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/70/64/Q05kSm.jpg"));
+                cardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/0/48/BcGWph.jpg"));
+                List<CardAction> cardButtons = new List<CardAction>();
+                CardAction plButton = new CardAction()
+                {
+                    Value = "https://en.wikipedia.org/wiki/Pig_Latin",
+                    Type = "openUrl",
+                    Title = "WikiPedia Page"
+                };
+                cardButtons.Add(plButton);
+                HeroCard plCard = new HeroCard()
+                {
+                    Title = "I'm a hero card",
+                    Subtitle = "Pig Latin Wikipedia Page",
+                    Images = cardImages,
+                    Buttons = cardButtons
+                };
+                Attachment plAttachment = plCard.ToAttachment();
+                replyToConversation.Attachments.Add(plAttachment);
+                await connector.Conversations.SendToConversationAsync(replyToConversation);
             }
             else
             {
