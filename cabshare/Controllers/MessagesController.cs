@@ -44,6 +44,8 @@ namespace cabshare
                 buttons.Add(button);
                 HeroCard hero = new HeroCard()
                 {
+                    Title = "hero",
+                    Subtitle = "zero",
                     Text = "I'm a hero card bitch",
                     Buttons = buttons
                 };
