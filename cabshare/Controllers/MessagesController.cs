@@ -27,54 +27,21 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                string y = await ReplyCreate(activity,connector);
-                string[] a = Regex.Split(y, "\r\n");
-                Activity channel = activity.CreateReply(activity.From.Id +" " +activity.From.Name+"       "+activity.Conversation.Id +" "+activity.Conversation.Name);
-                await connector.Conversations.ReplyToActivityAsync(channel);
-                Activity channel1 = activity.CreateReply(activity.ChannelData.ToString());
-                await connector.Conversations.ReplyToActivityAsync(channel1);
-                foreach (var b in a)
-                {
-                    Activity reply = activity.CreateReply(b);
-                    await connector.Conversations.ReplyToActivityAsync(reply);
-                }
-                Activity replyToConversation = activity.CreateReply("Should go to conversation, with a hero card");
+                await JoinCard.show(activity, connector, activity.ChannelData.ToString());
+                await ReplyCreate(activity, connector);
                 
-                replyToConversation.Attachments = new List<Attachment>();
-                List<CardImage> cardImages = new List<CardImage>();
                 
-                List<CardAction> cardButtons = new List<CardAction>();
-                CardAction plButton = new CardAction()
-                {
-                    Value = "some shit that's returned to the web app",
-                    Type = "imBack",
-                    Title = "Join"
-                };
-                cardButtons.Add(plButton);
-                HeroCard plCard = new HeroCard()
-                {
-                    
-                    Text = "this text will contain the details of the carpool",
-                    Images = cardImages,
-                    Buttons = cardButtons
-                };
-                Attachment plAttachment = plCard.ToAttachment();
-                replyToConversation.Attachments.Add(plAttachment);
-                await connector.Conversations.ReplyToActivityAsync(replyToConversation);
+                
             }
             else
             {
                 HandleSystemMessage(activity);
             }
-            //string x = await ReplyCreate(activity);
+            
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
 
-            /*using (travelrecordEntities DB = new travelrecordEntities())
-            {
-                var z = (from b in DB.Requests select b).ToList();
-                
-            }*/
+            
                 
             
         }
@@ -97,29 +64,25 @@ namespace cabshare
             }
             return Data;
         }
-        private static async Task<string> ReplyCreate(Activity activity,ConnectorClient connector)
+        private static async Task<int> ReplyCreate(Activity activity,ConnectorClient connector)
         {
             var x = await GetEntityFromLUIS(activity.Text);
             if (x.topScoringIntent.intent == "Greeting")
             {
                 string y = await GetUserName(activity);
-                return "Hey " + y + "!";
+                await JoinCard.show(activity,connector,"Hey " + y + "!");
+                return 1;
+
             }
             else if (x.topScoringIntent.intent == "Search")
             {
-                string answer = "";
+                
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
-                foreach (var b in z)
-                {
-                    answer += String.Format("Name: {0} Origin: {1} Destination: {2} Date: {3} Time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
-                }
-                if (answer == "")
-                {
-                    return "No matches found. You can add your request.";
-                }
-                else return answer;
+                await JoinCard.Cards(activity, connector, z);
+                return 1;
+                
 
             }
             else if (x.topScoringIntent.intent == "Add")
@@ -127,13 +90,13 @@ namespace cabshare
                 cleandata cleaned = await DBquery.Clean(x);
                 if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
                 {
-                    return "Provide Complete Travel Information.";
+                    return await JoinCard.show(activity,connector, "Provide Complete Travel Information.");
                 }
                 else
                 {
                     var a = await GetUserName(activity);
                     string y = await DBquery.addquery(cleaned, a);
-                    return y;
+                    return await JoinCard.show(activity, connector, y);
                 }
             }
             else if (x.topScoringIntent.intent == "Show")
@@ -141,11 +104,8 @@ namespace cabshare
                 string answer = "";
                 string y = await GetUserName(activity);
                 var z = await DBquery.showdata(y);
-                foreach (var b in z)
-                {
-                    answer += String.Format("name: {0}  origin: {1}  destination: {2}  date: {3}  time: {4}\r\n", b.name, b.origin.TrimEnd(), b.destination.TrimEnd(), b.date1.Value.ToShortDateString(), b.time1.ToString());
-                }
-                return answer;
+                await JoinCard.Cards(activity, connector,z);
+                return 1;
             }
             else if (x.topScoringIntent.intent == "Delete")
             {
@@ -160,11 +120,11 @@ namespace cabshare
                     }
 
                 }
-                return "All your Requests are now Deleted";
+                return 1;
             }
             else
             {
-                return "Sorry I didn't get you";
+                return 1;
             }
         }
         private static async Task<string> GetUserName(Activity activity)
