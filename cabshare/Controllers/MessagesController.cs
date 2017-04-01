@@ -23,15 +23,13 @@ namespace cabshare
         /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]Activity activity)
         {
-            ConnectorClient connector1 = new ConnectorClient(new Uri(activity.ServiceUrl));
-            Activity channel1 = activity.CreateReply(activity.Type +"    " +activity.ChannelData.ToString());
-            await connector1.Conversations.ReplyToActivityAsync(channel1);
+            
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 string y = await ReplyCreate(activity,connector);
                 string[] a = Regex.Split(y, "\r\n");
-                Activity channel = activity.CreateReply(activity.ChannelData.ToString());
+                Activity channel = activity.CreateReply("hey bitch");
                 await connector.Conversations.ReplyToActivityAsync(channel);
                 foreach (var b in a)
                 {
