@@ -20,7 +20,7 @@ namespace cabshare
         {
             foreach(var b in requests)
             {
-                string card = String.Format("Date : {0}\r\nTime : {1}\r\nFrom : {2}\r\nTo : {3}\r\nMembers :", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd());
+                string card = String.Format(" DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\nMEMBERS :", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd());
                 Activity reply = activity.CreateReply("");
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
