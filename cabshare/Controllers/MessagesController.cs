@@ -51,8 +51,7 @@ namespace cabshare
                 cardButtons.Add(plButton);
                 HeroCard plCard = new HeroCard()
                 {
-                    Title = "I'm a hero card",
-                    Subtitle = "Pig Latin Wikipedia Page",
+                    
                     Text = "hey, i'm a hero card bitch",
                     Images = cardImages,
                     Buttons = cardButtons
