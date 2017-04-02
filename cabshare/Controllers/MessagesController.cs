@@ -204,7 +204,7 @@ namespace cabshare
                         Match matchResults = regexObj.Match(name);
                         while (matchResults.Success)
                         {
-                            results.Add(matchResults.ToString().Replace("#", ""));
+                            results.Add(matchResults.ToString().Replace("_", ""));
                             matchResults = matchResults.NextMatch();
                         }
                         return results[0];
