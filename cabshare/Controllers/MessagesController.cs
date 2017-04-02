@@ -92,7 +92,7 @@ namespace cabshare
                 
                 if(results[0]=="YES")
                 {
-                    var e = await GetUserName1(results[2]);
+                    string e = await GetUserName1(results[2]);
                     Activity repl = activity.CreateReply(e);
                     await connector.Conversations.ReplyToActivityAsync(repl);
                     int i;
@@ -101,7 +101,7 @@ namespace cabshare
                     using (var DB = new travelrecordEntities())
                     {
                         match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
-                        var f = await GetUserName1(results[2]);
+                        string f = await GetUserName1(results[2]);
                         
                         naam = match.name;
                         Activity rest = activity.CreateReply(naam + " " + match.id.ToString()+"   "+match.names +"   " +match.names + "_" + f);
@@ -111,7 +111,7 @@ namespace cabshare
                         
                         
                     }
-                    match.names = match.names + "hello";
+                    match.names = match.names +"_"+ e ;
                     Activity replying = activity.CreateReply(match.names);
                     await connector.Conversations.ReplyToActivityAsync(replying);
                     using (var db = new travelrecordEntities())
