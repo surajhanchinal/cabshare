@@ -100,6 +100,7 @@ namespace cabshare
                         await JoinCard.show(activity, connector, match.name);
                     var e = await GetUserName1(results[2]); 
                         m.names = (m.names + " " + e);
+                    await JoinCard.show(activity, connector, m.names);
                     await DB.SaveChangesAsync();
 
                 }
