@@ -89,7 +89,7 @@ namespace cabshare
                 }
                 Activity repo = activity.CreateReply(results[1]);
                 await connector.Conversations.ReplyToActivityAsync(repo);
-                return 1;
+                
                 if(results[0]=="YES")
                 {
                    
