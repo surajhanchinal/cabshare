@@ -12,6 +12,8 @@ using System.Text.RegularExpressions;
 using Json.NET;
 using Newtonsoft.Json.Linq;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace cabshare
 {
@@ -111,11 +113,16 @@ namespace cabshare
                             await db.SaveChangesAsync();
                         }
                     }
-                    catch(Exception ex)
+                    catch (DbEntityValidationException dbEx)
                     {
-                        //await JoinCard.show(activity, connector,ex.Source);
-                        await JoinCard.show(activity, connector, ex.InnerException.Message);
-
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                await JoinCard.show(activity, connector, validationError.ErrorMessage);
+                                await JoinCard.show(activity, connector, validationError.PropertyName);
+                            }
+                        }
                     }
                     await JoinCard.show(activity, connector, "join request accepted");
                     
