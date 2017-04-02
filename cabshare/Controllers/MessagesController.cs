@@ -103,10 +103,17 @@ namespace cabshare
                     if (match != null)
                         match.names = match.names + "_" + e;
                     await JoinCard.show(activity,connector,match.names);
-                   using (var db = new travelrecordEntities())
+                    try
                     {
-                        db.Entry(match).State = EntityState.Modified;
-                        await db.SaveChangesAsync();
+                        using (var db = new travelrecordEntities())
+                        {
+                            db.Entry(match).State = EntityState.Modified;
+                            await db.SaveChangesAsync();
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        await JoinCard.show(activity, connector, ex.InnerException.ToString());
                     }
                     await JoinCard.show(activity, connector, "join request accepted");
                     
