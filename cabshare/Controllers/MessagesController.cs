@@ -85,6 +85,9 @@ namespace cabshare
                     results.Add(matchResults.ToString().Replace("_", ""));
                     matchResults = matchResults.NextMatch();
                 }
+                Activity reply = activity.CreateReply(results[0]+" "+results[1]+" "+results[2]);
+                await connector.Conversations.ReplyToActivityAsync(reply);
+                return 1;
                 if(results[0]=="YES")
                 {
                    
