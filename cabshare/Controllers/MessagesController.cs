@@ -92,10 +92,11 @@ namespace cabshare
                 
                 if(results[0]=="YES")
                 {
-                   
+                    Activity repl = activity.CreateReply("btich");
+                    await connector.Conversations.ReplyToActivityAsync(repl);
                     using (var DB = new travelrecordEntities())
                     {
-                        Request match = (from b in DB.Requests where b.id.ToString() == results[1] select b).FirstOrDefault();
+                        Request match = (from b in DB.Requests where b.id == int.Parse(results[1]) select b).FirstOrDefault();
                         var e = await GetUserName1(results[2]);
                         naam = match.name;
                         match.names += ("_" + e);
