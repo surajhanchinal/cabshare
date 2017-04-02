@@ -94,12 +94,12 @@ namespace cabshare
                     int i;
                     int.TryParse(results[1],out i);
                     var DB = new travelrecordEntities();
-                   
+                    var m = DB.Requests.FirstOrDefault();
                         Request match = (from b in DB.Requests where i == b.id select b).FirstOrDefault();
-                    DB.Entry(match).State = EntityState.Modified;
+                    DB.Entry(m).State = EntityState.Modified;
                         await JoinCard.show(activity, connector, match.name);
                     var e = await GetUserName1(results[2]); 
-                        match.names = (match.names + " " + e);
+                        m.names = (m.names + " " + e);
                     await DB.SaveChangesAsync();
 
                 }
