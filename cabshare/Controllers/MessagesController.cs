@@ -102,11 +102,11 @@ namespace cabshare
                         Request match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
                         var f = await GetUserName1(results[2]);
                         naam = match.name;
-                        
+                        Activity rest = activity.CreateReply(naam + " " + match.id.ToString());
+                        await connector.Conversations.ReplyToActivityAsync(rest);
                         match.names += ("_" + f);
                         await DB.SaveChangesAsync();
-                        Activity rest = activity.CreateReply(naam + " " + match.id.ToString()+ " " + match.names);
-                        await connector.Conversations.ReplyToActivityAsync(rest);
+                        
                         
                     }
                 }
