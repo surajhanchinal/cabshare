@@ -111,7 +111,10 @@ namespace cabshare
                         
                         
                     }
-                    match.names = match.names+"bitch" ;
+                    if (match.names == "")
+                        match.names = e;
+                    else
+                        match.names = match.names + "_" + e;
                     Activity replying = activity.CreateReply(match.names);
                     await connector.Conversations.ReplyToActivityAsync(replying);
                     using (var db = new travelrecordEntities())
