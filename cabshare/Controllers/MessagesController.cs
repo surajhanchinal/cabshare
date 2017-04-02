@@ -115,7 +115,7 @@ namespace cabshare
                 await JoinCard.Cards(activity, connector, z);
                 return 1;
             }
-            else if (x.topScoringIntent.intent == "Join")
+            else if (x.topScoringIntent.intent == "join")
             {
                 var c = JObject.Parse(activity.ChannelData.ToString());
                 Request request = JsonConvert.DeserializeObject<Request>(c["postback"]["payload"]+"");
