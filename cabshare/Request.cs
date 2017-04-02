@@ -20,5 +20,8 @@ namespace cabshare
         public Nullable<System.TimeSpan> time1 { get; set; }
         public string origin { get; set; }
         public string destination { get; set; }
+        public Nullable<int> MAXNO { get; set; }
+        public Nullable<int> fbid { get; set; }
+        public Nullable<int> psid { get; set; }
     }
 }

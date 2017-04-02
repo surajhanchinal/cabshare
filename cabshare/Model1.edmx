@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="travelrecordModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="travelrecordModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Requests">
           <Key>
             <PropertyRef Name="id" />
@@ -13,14 +13,16 @@
           <Property Name="name" Type="varchar" MaxLength="20" />
           <Property Name="date1" Type="date" />
           <Property Name="time1" Type="time" Precision="7" />
-          <Property Name="origin" Type="char" MaxLength="25" />
-          <Property Name="destination" Type="char" MaxLength="25" />
+          <Property Name="origin" Type="varchar" MaxLength="20" />
+          <Property Name="destination" Type="varchar" MaxLength="20" />
+          <Property Name="MAXNO" Type="int" />
+          <Property Name="fbid" Type="int" />
+          <Property Name="psid" Type="int" />
         </EntityType>
         <EntityContainer Name="travelrecordModelStoreContainer">
           <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="travelrecordModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -32,8 +34,11 @@
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="date1" Type="DateTime" Precision="0" />
           <Property Name="time1" Type="Time" Precision="7" />
-          <Property Name="origin" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
-          <Property Name="destination" Type="String" MaxLength="25" FixedLength="true" Unicode="false" />
+          <Property Name="origin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="destination" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="MAXNO" Type="Int32" />
+          <Property Name="fbid" Type="Int32" />
+          <Property Name="psid" Type="Int32" />
         </EntityType>
         <EntityContainer Name="travelrecordEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Requests" EntityType="Self.Request" />
@@ -47,6 +52,9 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="travelrecordModel.Request">
               <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="psid" ColumnName="psid" />
+                <ScalarProperty Name="fbid" ColumnName="fbid" />
+                <ScalarProperty Name="MAXNO" ColumnName="MAXNO" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="date1" ColumnName="date1" />
