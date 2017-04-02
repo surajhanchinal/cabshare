@@ -97,22 +97,29 @@ namespace cabshare
                     await connector.Conversations.ReplyToActivityAsync(repl);
                     int i;
                     int.TryParse(results[1], out i);
+                    Request match;
                     using (var DB = new travelrecordEntities())
                     {
-                        Request match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
+                        match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
                         var f = await GetUserName1(results[2]);
-                        DB.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                        
                         naam = match.name;
                         Activity rest = activity.CreateReply(naam + " " + match.id.ToString()+"   "+match.names +"   " +match.names + "_" + f);
                         await connector.Conversations.ReplyToActivityAsync(rest);
-                        match.names = match.names + "_" + f;
-                        Activity replying = activity.CreateReply(match.names);
-                        await connector.Conversations.ReplyToActivityAsync(replying);
-                       
-                        DB.SaveChanges();
+                                             
+                        
                         
                         
                     }
+                    match.names = match.names + "_" + e;
+                    Activity replying = activity.CreateReply(match.names);
+                    await connector.Conversations.ReplyToActivityAsync(replying);
+                    using (var db = new travelrecordEntities())
+                    {
+                        db.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                        db.SaveChanges();
+                    }
+
                 }
                 else
                 {
