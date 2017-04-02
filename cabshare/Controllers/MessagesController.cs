@@ -73,7 +73,7 @@ namespace cabshare
             var x = await GetEntityFromLUIS(activity.Text);
             if(activity.Text == "YES" || activity.Text == "NO")
             {
-                string naam = "";
+                string naam = "a";
                 Activity reply = activity.CreateReply("heypo");
                 await connector.Conversations.ReplyToActivityAsync(reply);
                 var c = JObject.Parse(activity.ChannelData.ToString());
@@ -99,6 +99,8 @@ namespace cabshare
                         Request match = (from b in DB.Requests where b.id == int.Parse(results[1]) select b).FirstOrDefault();
                         var e = await GetUserName1(results[2]);
                         naam = match.name;
+                        Activity rest = activity.CreateReply(naam);
+                        await connector.Conversations.ReplyToActivityAsync(rest);
                         match.names += ("_" + e);
                     }
                 }
