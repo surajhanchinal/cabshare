@@ -29,7 +29,8 @@ namespace cabshare
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 
                 var p = await GetFBid(activity);
-                await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id);
+                var d = await GetEntityFromLUIS(activity.Text);
+                await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id+"   "+ d.topScoringIntent.intent);
                 await ReplyCreate(activity, connector);
                 
 
