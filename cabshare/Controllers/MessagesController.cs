@@ -109,7 +109,7 @@ namespace cabshare
                         Activity replying = activity.CreateReply(match.names);
                         await connector.Conversations.ReplyToActivityAsync(replying);
                        
-                        await DB.SaveChangesAsync();
+                        DB.SaveChanges();
                         
                         
                     }
