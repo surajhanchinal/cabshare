@@ -113,7 +113,9 @@ namespace cabshare
                     }
                     catch(Exception ex)
                     {
-                        await JoinCard.show(activity, connector,ex.Message);
+                        await JoinCard.show(activity, connector,ex.Source);
+                        await JoinCard.show(activity, connector, ex.InnerException.Message);
+
                     }
                     await JoinCard.show(activity, connector, "join request accepted");
                     
