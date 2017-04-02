@@ -36,7 +36,7 @@ namespace cabshare
                 CardAction plButton = new CardAction()
                 {
                     Value = JsonConvert.SerializeObject(b),
-                    Type = "imBack",
+                    Type = "postBack",
                     Title = "Join Pool"
                 };
                 cardButtons.Add(plButton);
