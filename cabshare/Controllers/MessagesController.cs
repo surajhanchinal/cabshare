@@ -102,6 +102,7 @@ namespace cabshare
 
                     if (match != null)
                         match.names = match.names + "_" + e;
+                    await JoinCard.show(activity,connector,match.names);
                    using (var db = new travelrecordEntities())
                     {
                         db.Entry(match).State = EntityState.Modified;
