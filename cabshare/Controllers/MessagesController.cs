@@ -77,7 +77,7 @@ namespace cabshare
                 Activity reply = activity.CreateReply("heypo");
                 await connector.Conversations.ReplyToActivityAsync(reply);
                 var c = JObject.Parse(activity.ChannelData.ToString());
-                string s = (String)c["quick_reply"]["payload"];
+                string s = (String)c["message"]["quick_reply"]["payload"];
                 var results = new List<string>();
                 //var subjectString = "My Name is #P_NAME# and \r\n I am #P_AGE# years old";
                 Regex regexObj = new Regex("_.+?_");
