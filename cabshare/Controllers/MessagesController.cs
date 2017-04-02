@@ -94,7 +94,7 @@ namespace cabshare
                     int i;
                     int.TryParse(results[1],out i);
                     var DB = new travelrecordEntities();
-                    var m = DB.Requests.FirstOrDefault();
+                    var m = DB.Requests.Find(24);
                         Request match = (from b in DB.Requests where i == b.id select b).FirstOrDefault();
                     DB.Entry(m).State = EntityState.Modified;
                         await JoinCard.show(activity, connector, match.name);
