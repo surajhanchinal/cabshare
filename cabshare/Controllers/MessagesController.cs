@@ -101,13 +101,14 @@ namespace cabshare
                     {
                         Request match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
                         var f = await GetUserName1(results[2]);
+                        DB.Entry(match).State = System.Data.Entity.EntityState.Modified;
                         naam = match.name;
                         Activity rest = activity.CreateReply(naam + " " + match.id.ToString()+"   "+match.names +"   " +match.names + "_" + f);
                         await connector.Conversations.ReplyToActivityAsync(rest);
                         match.names = match.names + "_" + f;
                         Activity replying = activity.CreateReply(match.names);
                         await connector.Conversations.ReplyToActivityAsync(replying);
-                        DB.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                       
                         await DB.SaveChangesAsync();
                         
                         
