@@ -96,7 +96,7 @@ namespace cabshare
                 fbQRButtonRed.content_type = "text";
                 fbQRButtonRed.title = "YES";
                 //fbQRButtonRed.payload = "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED";
-                fbQRButtonRed.payload = String.Format("{\r\n\"Answer\":\"YES\",\r\n\"Id\":\"{0}\",\r\n\"psid\":\"{1}\"\r\n}",request.id,activity.From.Id);
+                fbQRButtonRed.payload = String.Format("{\r\n\"Answer\":\"YES\",\r\n\"Id\":\"{0}\",\r\n\"psid\":\"{1}\"\r\n}",request.id.ToString(),activity.From.Id.ToString());
                 fbQRButtonRed.image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Button_Icon_Red.svg/300px-Button_Icon_Red.svg.png";
                 dynamic fbQRButtonBlue = new JObject();
                 fbQRButtonBlue.content_type = "text";
