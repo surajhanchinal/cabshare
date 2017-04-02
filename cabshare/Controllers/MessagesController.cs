@@ -74,6 +74,8 @@ namespace cabshare
             if(activity.Text == "YES" || activity.Text == "NO")
             {
                 string naam = "";
+                Activity reply = activity.CreateReply("heypo");
+                await connector.Conversations.ReplyToActivityAsync(reply);
                 var c = JObject.Parse(activity.ChannelData.ToString());
                 string s = (String)c["quick_reply"]["payload"];
                 var results = new List<string>();
@@ -85,8 +87,8 @@ namespace cabshare
                     results.Add(matchResults.ToString().Replace("_", ""));
                     matchResults = matchResults.NextMatch();
                 }
-                Activity reply = activity.CreateReply(results[0]+" "+results[1]+" "+results[2]);
-                await connector.Conversations.ReplyToActivityAsync(reply);
+                Activity repo = activity.CreateReply(results[0]+" "+results[1]+" "+results[2]);
+                await connector.Conversations.ReplyToActivityAsync(repo);
                 return 1;
                 if(results[0]=="YES")
                 {
