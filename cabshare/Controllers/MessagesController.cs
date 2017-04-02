@@ -75,8 +75,7 @@ namespace cabshare
             if(activity.Text == "YES" || activity.Text == "NO")
             {
                 string naam = "a";
-                Activity reply = activity.CreateReply("heypo");
-                await connector.Conversations.ReplyToActivityAsync(reply);
+               
                 var c = JObject.Parse(activity.ChannelData.ToString());
                 string s = (String)c["message"]["quick_reply"]["payload"];
                 var results = new List<string>();
@@ -88,44 +87,19 @@ namespace cabshare
                     results.Add(matchResults.ToString().Replace("_", ""));
                     matchResults = matchResults.NextMatch();
                 }
-                Activity repo = activity.CreateReply(results[1]);
-                await connector.Conversations.ReplyToActivityAsync(repo);
+                
                 
                 if(results[0]=="YES")
                 {
-                    string e = await GetUserName1(results[2]);
-                    Activity repl = activity.CreateReply(e);
-                    await connector.Conversations.ReplyToActivityAsync(repl);
                     int i;
-                    int.TryParse(results[1], out i);
-                    Request match;
-                    using (var DB = new travelrecordEntities())
-                    {
-                        match = (from b in DB.Requests where b.id == i  select b).FirstOrDefault();
-                        string f = await GetUserName1(results[2]);
-                        
-                        naam = match.name;
-                        Activity rest = activity.CreateReply(naam + " " + match.id.ToString()+"   "+match.names +"   " +match.names + "_" + f);
-                        await connector.Conversations.ReplyToActivityAsync(rest);
-                                             
-                        
-                        
-                        
-                    }
-                    if (match.names == "")
-                        match.names = e;
-                    else
-                    {
-                        match.names += e;
-                    }
-                    Activity replying = activity.CreateReply(match.names);
-                    await connector.Conversations.ReplyToActivityAsync(replying);
-                    using (var db = new travelrecordEntities())
-                    {
-                        db.Entry(match).State = EntityState.Modified;
-                        db.SaveChanges();
-                    }
-
+                    int.TryParse(results[1],out i);
+                    var DB = new travelrecordEntities();
+                    
+                        Request match = (from b in DB.Requests where i == b.id select b).FirstOrDefault();
+                        await JoinCard.show(activity, connector, match.name);
+                    var e = GetUserName1(results[2]); 
+                        match.names = match.names + " " + e;
+                    await DB.SaveChangesAsync();
                 }
                 else
                 {
