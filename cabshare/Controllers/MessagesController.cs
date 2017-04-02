@@ -27,6 +27,16 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
+                var botAccount = activity.Recipient;
+                var userAccount = new ChannelAccount(name: "Niket Agrawal", id: "1429144410450540");
+                var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                IMessageActivity message = Activity.CreateMessageActivity();
+                message.From = botAccount;
+                message.Recipient = userAccount;
+                message.Conversation = new ConversationAccount(id: conversationId.Id);
+                message.Text = "niket, u a sux";
+                message.Locale = "en-Us";
+                await connector.Conversations.SendToConversationAsync((Activity)message);
                 var p = await GetFBid(activity);
                 await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id);
                 await ReplyCreate(activity, connector);
@@ -72,19 +82,19 @@ namespace cabshare
             if (x.topScoringIntent.intent == "Greeting")
             {
                 string y = await GetUserName(activity);
-                await JoinCard.show(activity,connector,"Hey " + y + "!");
+                await JoinCard.show(activity, connector, "Hey " + y + "!");
                 return 1;
 
             }
             else if (x.topScoringIntent.intent == "Search")
             {
-                
+
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
                 await JoinCard.Cards(activity, connector, z);
                 return 1;
-                
+
 
             }
             else if (x.topScoringIntent.intent == "Add")
@@ -92,7 +102,7 @@ namespace cabshare
                 cleandata cleaned = await DBquery.Clean(x);
                 if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
                 {
-                    return await JoinCard.show(activity,connector, "Provide Complete Travel Information.");
+                    return await JoinCard.show(activity, connector, "Provide Complete Travel Information.");
                 }
                 else
                 {
@@ -101,17 +111,21 @@ namespace cabshare
                     //await connector.Conversations.ReplyToActivityAsync(reply);
                     var a = await GetUserName(activity);
                     var b = await GetFBid(activity);
-                    
-                    string y = await DBquery.addquery(cleaned, a,activity.From.Id,b);
+
+                    string y = await DBquery.addquery(cleaned, a, activity.From.Id, b);
                     return await JoinCard.show(activity, connector, y);
                 }
             }
             else if (x.topScoringIntent.intent == "Show")
             {
-                
+
                 string y = await GetUserName(activity);
                 var z = await DBquery.showdata(y);
-                await JoinCard.Cards(activity, connector,z);
+                await JoinCard.Cards(activity, connector, z);
+                return 1;
+            }
+            else if (x.topScoringIntent.intent == "Join")
+            {
                 return 1;
             }
             else if (x.topScoringIntent.intent == "Delete")
