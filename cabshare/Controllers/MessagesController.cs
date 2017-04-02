@@ -27,16 +27,7 @@ namespace cabshare
             if (activity.Type == ActivityTypes.Message)
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
-                var botAccount = activity.Recipient;
-                var userAccount = new ChannelAccount(name: "Niket Agrawal", id: "1429144410450540");
-                var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
-                IMessageActivity message = Activity.CreateMessageActivity();
-                message.From = botAccount;
-                message.Recipient = userAccount;
-                message.Conversation = new ConversationAccount(id: conversationId.Id);
-                message.Text = "niket, u a sux";
-                message.Locale = "en-Us";
-                await connector.Conversations.SendToConversationAsync((Activity)message);
+                
                 var p = await GetFBid(activity);
                 await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id);
                 await ReplyCreate(activity, connector);
@@ -126,6 +117,18 @@ namespace cabshare
             }
             else if (x.topScoringIntent.intent == "Join")
             {
+                var c = JObject.Parse(activity.ChannelData.ToString());
+                Request request = JsonConvert.DeserializeObject<Request>(c["postback"]["payload"]+"");
+                var botAccount = activity.Recipient;
+                var userAccount = new ChannelAccount(name: request.name, id: request.psid);
+                var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                IMessageActivity message = Activity.CreateMessageActivity();
+                message.From = botAccount;
+                message.Recipient = userAccount;
+                message.Conversation = new ConversationAccount(id: conversationId.Id);
+                message.Text = String.Format("{0}, u a sux",request.name);
+                message.Locale = "en-Us";
+                await connector.Conversations.SendToConversationAsync((Activity)message);
                 return 1;
             }
             else if (x.topScoringIntent.intent == "Delete")
