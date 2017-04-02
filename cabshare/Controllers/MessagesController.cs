@@ -95,15 +95,17 @@ namespace cabshare
                 dynamic fbQRButtonRed = new JObject();
                 fbQRButtonRed.content_type = "text";
                 fbQRButtonRed.title = "YES";
-                fbQRButtonRed.payload = String.Format("{\"Answer\":\"YES\",\"Id\":\"{0}\",\"psid\":\"{1}\"",request.id,activity.From.Id);
+                fbQRButtonRed.payload = "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED";
+                //fbQRButtonRed.payload = String.Format("{\"Answer\":\"YES\",\"Id\":\"{0}\",\"psid\":\"{1}\"",request.id,activity.From.Id);
                 fbQRButtonRed.image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Button_Icon_Red.svg/300px-Button_Icon_Red.svg.png";
                 dynamic fbQRButtonBlue = new JObject();
                 fbQRButtonBlue.content_type = "text";
                 fbQRButtonBlue.title = "NO";
-                fbQRButtonBlue.payload = String.Format("{\"Answer\":\"NO\",\"Id\":\"{0}\",\"psid\":\"{1}\"", request.id, activity.From.Id);
+                fbQRButtonBlue.payload = "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_RED";
+                //fbQRButtonBlue.payload = String.Format("{\"Answer\":\"NO\",\"Id\":\"{0}\",\"psid\":\"{1}\"", request.id, activity.From.Id);
                 fbQRButtonBlue.image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Button_Icon_Blue.svg/768px-Button_Icon_Blue.svg.png";
 
-                quickReplies = new JArray(fbQRButtonRed, fbQRButtonBlue);
+                quickReplies.quick_replies = new JArray(fbQRButtonRed, fbQRButtonBlue);
                 message.ChannelData = quickReplies;
                 await connector.Conversations.SendToConversationAsync((Activity)message);
                 return 1;
