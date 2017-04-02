@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Json.NET;
 using Newtonsoft.Json.Linq;
+using System.Data.Entity;
 
 namespace cabshare
 {
@@ -121,7 +122,7 @@ namespace cabshare
                     await connector.Conversations.ReplyToActivityAsync(replying);
                     using (var db = new travelrecordEntities())
                     {
-                        db.Entry(match).State = System.Data.Entity.EntityState.Modified;
+                        db.Entry(match).State = EntityState.Modified;
                         db.SaveChanges();
                     }
 
