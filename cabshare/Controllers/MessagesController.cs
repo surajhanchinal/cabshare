@@ -91,7 +91,7 @@ namespace cabshare
                 message.Conversation = new ConversationAccount(id: conversationId.Id);
                 message.Text = String.Format("{0} wants to join you Carpool.Select 'YES' or 'NO'",activity.From.Name);
                 message.Locale = "en-Us";
-                dynamic quickReplies = new JObject();
+                /*dynamic quickReplies = new JObject();
                 dynamic fbQRButtonRed = new JObject();
                 fbQRButtonRed.content_type = "text";
                 fbQRButtonRed.title = "YES";
@@ -101,7 +101,7 @@ namespace cabshare
                 fbQRButtonBlue.title = "NO";
                 fbQRButtonBlue.payload = String.Format("{\"Answer\":\"NO\",\"Id\":\"{0}\",\"psid\":\"{1}\"", request.id, activity.From.Id);
                 quickReplies.quick_replies = new JArray(fbQRButtonRed, fbQRButtonBlue);
-                message.ChannelData = quickReplies;
+                message.ChannelData = quickReplies;*/
                 await connector.Conversations.SendToConversationAsync((Activity)message);
                 return 1;
             }
