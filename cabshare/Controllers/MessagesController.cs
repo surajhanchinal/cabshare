@@ -28,7 +28,7 @@ namespace cabshare
             {
                 ConnectorClient connector = new ConnectorClient(new Uri(activity.ServiceUrl));
                 var p = await GetFBid(activity);
-                await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p);
+                await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id);
                 await ReplyCreate(activity, connector);
                 
 
@@ -100,7 +100,8 @@ namespace cabshare
                     //Activity reply = activity.CreateReply("Please specify the number of seats");
                     //await connector.Conversations.ReplyToActivityAsync(reply);
                     var a = await GetUserName(activity);
-                    var b = await GetFBid(activity);
+                    //var b = await GetFBid(activity);
+                    string b = "";
                     string y = await DBquery.addquery(cleaned, a,activity.From.Id,b);
                     return await JoinCard.show(activity, connector, y);
                 }
