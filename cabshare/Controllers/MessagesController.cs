@@ -113,7 +113,7 @@ namespace cabshare
                     }
                     catch(Exception ex)
                     {
-                        await JoinCard.show(activity, connector,ex.Source);
+                        //await JoinCard.show(activity, connector,ex.Source);
                         await JoinCard.show(activity, connector, ex.InnerException.Message);
 
                     }
