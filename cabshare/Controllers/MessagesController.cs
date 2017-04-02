@@ -107,6 +107,7 @@ namespace cabshare
                         match.names = match.names + "_" + f;
                         Activity replying = activity.CreateReply(match.names);
                         await connector.Conversations.ReplyToActivityAsync(replying);
+                        DB.Entry(match).State = System.Data.Entity.EntityState.Modified;
                         await DB.SaveChangesAsync();
                         
                         
