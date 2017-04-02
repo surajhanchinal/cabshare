@@ -104,7 +104,7 @@ namespace cabshare
                         naam = match.name;
                         Activity rest = activity.CreateReply(naam + " " + match.id.ToString());
                         await connector.Conversations.ReplyToActivityAsync(rest);
-                        match.names += ("_" + f);
+                        match.names = match.names + "_" + f;
                         await DB.SaveChangesAsync();
                         
                         
