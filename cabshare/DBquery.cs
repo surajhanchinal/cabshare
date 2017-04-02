@@ -79,8 +79,8 @@ namespace cabshare
                 user.destination = data.dest;
                 user.date1 = data.date;
                 user.time1 = data.time.TimeOfDay;
-                user.fbid = int.Parse(fbid);
-                user.psid = int.Parse(psid);
+                user.fbid = fbid;
+                user.psid = psid;
                 user.MAXNO = data.noop;
                 DB.Requests.Add(user);
                 await DB.SaveChangesAsync();

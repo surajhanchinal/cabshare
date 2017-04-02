@@ -16,8 +16,8 @@
           <Property Name="origin" Type="varchar" MaxLength="20" />
           <Property Name="destination" Type="varchar" MaxLength="20" />
           <Property Name="MAXNO" Type="int" />
-          <Property Name="fbid" Type="int" />
-          <Property Name="psid" Type="int" />
+          <Property Name="fbid" Type="varchar" MaxLength="20" />
+          <Property Name="psid" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityContainer Name="travelrecordModelStoreContainer">
           <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
@@ -37,8 +37,8 @@
           <Property Name="origin" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="destination" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MAXNO" Type="Int32" />
-          <Property Name="fbid" Type="Int32" />
-          <Property Name="psid" Type="Int32" />
+          <Property Name="fbid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="psid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="travelrecordEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Requests" EntityType="Self.Request" />

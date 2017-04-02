@@ -21,7 +21,7 @@ namespace cabshare
         public string origin { get; set; }
         public string destination { get; set; }
         public Nullable<int> MAXNO { get; set; }
-        public Nullable<int> fbid { get; set; }
-        public Nullable<int> psid { get; set; }
+        public string fbid { get; set; }
+        public string psid { get; set; }
     }
 }

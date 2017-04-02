@@ -100,8 +100,8 @@ namespace cabshare
                     //Activity reply = activity.CreateReply("Please specify the number of seats");
                     //await connector.Conversations.ReplyToActivityAsync(reply);
                     var a = await GetUserName(activity);
-                    //var b = await GetFBid(activity);
-                    string b = "";
+                    var b = await GetFBid(activity);
+                    
                     string y = await DBquery.addquery(cleaned, a,activity.From.Id,b);
                     return await JoinCard.show(activity, connector, y);
                 }
