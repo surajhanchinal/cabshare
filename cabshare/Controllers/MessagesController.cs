@@ -116,7 +116,7 @@ namespace cabshare
                         match.names = e;
                     else
                     {
-                        match.names = e;
+                        match.names += e;
                     }
                     Activity replying = activity.CreateReply(match.names);
                     await connector.Conversations.ReplyToActivityAsync(replying);
