@@ -97,9 +97,10 @@ namespace cabshare
                     
                         Request match = (from b in DB.Requests where i == b.id select b).FirstOrDefault();
                         await JoinCard.show(activity, connector, match.name);
-                    var e = GetUserName1(results[2]); 
-                        match.names = match.names + " " + e;
+                    var e = await GetUserName1(results[2]); 
+                        match.names = (match.names + " " + e);
                     await DB.SaveChangesAsync();
+
                 }
                 else
                 {
