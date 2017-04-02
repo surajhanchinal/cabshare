@@ -18,6 +18,7 @@
           <Property Name="MAXNO" Type="int" />
           <Property Name="fbid" Type="varchar" MaxLength="20" />
           <Property Name="psid" Type="varchar" MaxLength="20" />
+          <Property Name="names" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityContainer Name="travelrecordModelStoreContainer">
           <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
@@ -39,6 +40,7 @@
           <Property Name="MAXNO" Type="Int32" />
           <Property Name="fbid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="psid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="names" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="travelrecordEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Requests" EntityType="Self.Request" />
@@ -52,6 +54,7 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="travelrecordModel.Request">
               <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="names" ColumnName="names" />
                 <ScalarProperty Name="psid" ColumnName="psid" />
                 <ScalarProperty Name="fbid" ColumnName="fbid" />
                 <ScalarProperty Name="MAXNO" ColumnName="MAXNO" />

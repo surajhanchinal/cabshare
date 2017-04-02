@@ -23,5 +23,6 @@ namespace cabshare
         public Nullable<int> MAXNO { get; set; }
         public string fbid { get; set; }
         public string psid { get; set; }
+        public string names { get; set; }
     }
 }
