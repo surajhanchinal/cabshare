@@ -106,7 +106,7 @@ namespace cabshare
                    using (var db = new travelrecordEntities())
                     {
                         db.Entry(match).State = EntityState.Modified;
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                     }
                     await JoinCard.show(activity, connector, "join request accepted");
                     
