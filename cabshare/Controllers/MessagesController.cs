@@ -97,7 +97,7 @@ namespace cabshare
                     await connector.Conversations.ReplyToActivityAsync(repl);
                     using (var DB = new travelrecordEntities())
                     {
-                        Request match = (from b in DB.Requests where b.id == int.Parse(results[1]) select b).FirstOrDefault();
+                        Request match = (from b in DB.Requests select b).FirstOrDefault();
                         var f = await GetUserName1(results[2]);
                         naam = match.name;
                         Activity rest = activity.CreateReply(naam);
