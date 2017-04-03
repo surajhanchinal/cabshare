@@ -83,8 +83,9 @@ namespace cabshare
                     Buttons = cardButtons
                 };
                 Attachment plAttachment = plCard.ToAttachment();
+                Attachment rAttachment = rcard.ToAttachment();
                 reply.Attachments.Add(plAttachment);
-                reply.Attachments.Add(plAttachment);
+                reply.Attachments.Add(rAttachment);
                 await connector.Conversations.ReplyToActivityAsync(reply);
                 //await JoinCard.show(activity, connector, card);
 
