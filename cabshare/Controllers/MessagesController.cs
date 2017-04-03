@@ -96,21 +96,21 @@ namespace cabshare
                     Request match = DB.Requests.Where(b => b.id == i).FirstOrDefault();
                     naam = match.name;
                 }
-                
 
-                if (results[0]=="YES")
+
+                if (results[0] == "YES")
                 {
-                    
+
                     string e = await GetUserName1(results[2]);
                     Request match;
                     using (var DB = new travelrecordEntities())
                     {
-                        match = DB.Requests.Where(b => b.id == i).FirstOrDefault(); 
+                        match = DB.Requests.Where(b => b.id == i).FirstOrDefault();
                     }
                     naam = match.name;
                     if (match != null)
                         match.names = match.names + "_" + e;
-                    await JoinCard.show(activity,connector,match.names);
+                    await JoinCard.show(activity, connector, match.names);
                     try
                     {
                         using (var db = new travelrecordEntities())
@@ -142,22 +142,29 @@ namespace cabshare
                         }
                     }
                     await JoinCard.show(activity, connector, "join request accepted");
-                    
+
 
                 }
                 else
                 {
-                    var botAccount = activity.Recipient;
-                    var e = await GetUserName1(results[2]);
-                    var userAccount = new ChannelAccount(name: e, id: results[2]);
-                    var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
-                    IMessageActivity message = Activity.CreateMessageActivity();
-                    message.From = botAccount;
-                    message.Recipient = userAccount;
-                    message.Conversation = new ConversationAccount(id: conversationId.Id);
-                    message.Text = String.Format("The Join request you sent to {0} was not accepted",naam);
-                    message.Locale = "en-Us";
-                    await connector.Conversations.SendToConversationAsync((Activity)message);
+                    try {
+                        var botAccount = activity.Recipient;
+                        var e = await GetUserName1(results[2]);
+                        var userAccount = new ChannelAccount(name: e, id: results[2]);
+                        var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                        IMessageActivity message = Activity.CreateMessageActivity();
+                        message.From = botAccount;
+                        message.Recipient = userAccount;
+                        message.Conversation = new ConversationAccount(id: conversationId.Id);
+                        message.Text = String.Format("The Join request you sent to {0} was not accepted", naam);
+                        message.Locale = "en-Us";
+                        await connector.Conversations.SendToConversationAsync((Activity)message);
+
+                    }
+                    catch(Exception ex)
+                    {
+                        await JoinCard.show(activity, connector, ex.Message);
+                }
                 }
                 return 1;
             }
