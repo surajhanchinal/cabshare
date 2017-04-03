@@ -216,6 +216,10 @@ namespace cabshare
                 var a = await GetEntityFromLUIS(activity.Text);
                 var y = await DBquery.Clean(a);
                 var z = await DBquery.dataquery(y);
+                if(z.Count == 0)
+                {
+                    await JoinCard.show(activity, connector, "Sorry. There were no matches. You can create your own pool");
+                }
                 await JoinCard.Cards(activity, connector, z);
                 return 1;
 
