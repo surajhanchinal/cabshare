@@ -89,12 +89,18 @@ namespace cabshare
                     results.Add(matchResults.ToString().Replace("_", ""));
                     matchResults = matchResults.NextMatch();
                 }
-                
-                
-                if(results[0]=="YES")
+                int i;
+                int.TryParse(results[1], out i);
+                using (var DB = new travelrecordEntities())
                 {
-                    int i;
-                    int.TryParse(results[1],out i);
+                    Request match = DB.Requests.Where(b => b.id == i).FirstOrDefault();
+                    naam = match.name;
+                }
+                
+
+                if (results[0]=="YES")
+                {
+                    
                     string e = await GetUserName1(results[2]);
                     Request match;
                     using (var DB = new travelrecordEntities())

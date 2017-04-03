@@ -43,12 +43,13 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = card,
+                    Text = "",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
                 Attachment plAttachment = plCard.ToAttachment();
                 reply.Attachments.Add(plAttachment);
+                await JoinCard.show(activity, connector, card);
                 await connector.Conversations.ReplyToActivityAsync(reply);
                 
             }
