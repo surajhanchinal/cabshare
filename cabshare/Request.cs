@@ -14,7 +14,6 @@ namespace cabshare
     
     public partial class Request
     {
-        public int id { get; set; }
         public string name { get; set; }
         public Nullable<System.DateTime> date1 { get; set; }
         public Nullable<System.TimeSpan> time1 { get; set; }
@@ -24,5 +23,6 @@ namespace cabshare
         public string fbid { get; set; }
         public string psid { get; set; }
         public string names { get; set; }
+        public int id { get; set; }
     }
 }

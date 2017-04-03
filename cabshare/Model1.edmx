@@ -9,7 +9,6 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" />
           <Property Name="date1" Type="date" />
           <Property Name="time1" Type="time" Precision="7" />
@@ -19,6 +18,7 @@
           <Property Name="fbid" Type="varchar" MaxLength="20" />
           <Property Name="psid" Type="varchar" MaxLength="20" />
           <Property Name="names" Type="varchar" MaxLength="128" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityContainer Name="travelrecordModelStoreContainer">
           <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
@@ -31,7 +31,6 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="date1" Type="DateTime" Precision="0" />
           <Property Name="time1" Type="Time" Precision="7" />
@@ -41,6 +40,7 @@
           <Property Name="fbid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="psid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="names" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityContainer Name="travelrecordEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Requests" EntityType="Self.Request" />
@@ -54,11 +54,11 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="travelrecordModel.Request">
               <MappingFragment StoreEntitySet="Requests">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="names" ColumnName="names" />
                 <ScalarProperty Name="psid" ColumnName="psid" />
                 <ScalarProperty Name="fbid" ColumnName="fbid" />
                 <ScalarProperty Name="MAXNO" ColumnName="MAXNO" />
-                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="date1" ColumnName="date1" />
                 <ScalarProperty Name="time1" ColumnName="time1" />
