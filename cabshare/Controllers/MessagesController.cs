@@ -109,7 +109,10 @@ namespace cabshare
                     }
                     naam = match.name;
                     if (match != null)
+                    {
                         match.names = match.names + "_" + e;
+                        match.MAXNO--;
+                    }
                     await JoinCard.show(activity, connector, match.names);
                     try
                     {

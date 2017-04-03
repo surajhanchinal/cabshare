@@ -18,9 +18,9 @@ namespace cabshare
         }
         public static async Task<int> Cards(Activity activity,ConnectorClient connector,List<Request> requests)
         {
-            foreach(var b in requests)
+            foreach(var b in requests.Where(x => x.MAXNO > 0))
             {
-                string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(),b.names);
+                string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(),b.names,b.MAXNO);
                 Activity reply = activity.CreateReply(card);
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
@@ -43,16 +43,18 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Title = card,
+                    Title = "",
+                    Text = "",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
 
                 Attachment plAttachment = plCard.ToAttachment();
                 reply.Attachments.Add(plAttachment);
-                //await JoinCard.show(activity, connector, card);
-                await connector.Conversations.ReplyToActivityAsync(reply);
                 
+                await connector.Conversations.ReplyToActivityAsync(reply);
+                await JoinCard.show(activity, connector, card);
+
             }
             return 1;
         }
