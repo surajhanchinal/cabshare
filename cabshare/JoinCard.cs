@@ -18,55 +18,80 @@ namespace cabshare
         }
         public static async Task<int> Cards(Activity activity, ConnectorClient connector, List<Request> requests)
         {
-            Activity replyToConversation = activity.CreateReply("Receipt card");
-            replyToConversation.Recipient = activity.From;
-            replyToConversation.Type = "message";
-            replyToConversation.Attachments = new List<Attachment>();
-            //List<CardImage> cardImages = new List<CardImage>();
-            //List<CardImage> cardImages1 = new List<CardImage>();
-            //ardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"));
-            List<CardAction> cardButtons = new List<CardAction>();
-            CardAction plButton = new CardAction()
+            foreach (var b in requests.Where(x => x.MAXNO > 0))
             {
-                Value = "https://en.wikipedia.org/wiki/Pig_Latin",
-                Type = "openUrl",
-                Title = "WikiPedia Page"
-            };
-            cardButtons.Add(plButton);
-            ReceiptItem lineItem1 = new ReceiptItem()
-            {
-                Title = "Pork Shoulder",
-                Subtitle = "8 lbs",
-                Text = null,
-                //Image = new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"),
-                Price = "16.25",
-                Quantity = "1",
-                Tap = null
-            };
-            ReceiptItem lineItem2 = new ReceiptItem()
-            {
-                Title = "Bacon",
-                Subtitle = "5 lbs",
-                Text = null,
-                //Image = new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"),
-                Price = "34.50",
-                Quantity = "2",
-                Tap = null
-            };
-            List<ReceiptItem> receiptList = new List<ReceiptItem>();
-            receiptList.Add(lineItem1);
-            receiptList.Add(lineItem2);
-            ReceiptCard plCard = new ReceiptCard()
-            {
-                Title = "I'm a receipt card, isn't this bacon expensive?",
-                Buttons = cardButtons,
-                Items = receiptList,
-                Total = "275.25",
-                Tax = "27.52"
-            };
-            Attachment plAttachment = plCard.ToAttachment();
-            replyToConversation.Attachments.Add(plAttachment);
-            var reply = await connector.Conversations.SendToConversationAsync(replyToConversation);
+                string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(), b.names, b.MAXNO);
+                Activity reply = activity.CreateReply("");
+                reply.Attachments = new List<Attachment>();
+                List<CardImage> cardImages = new List<CardImage>();
+                List<Fact> facts = new List<Fact>();
+                List<CardAction> cardButtons = new List<CardAction>();
+                facts.Add(new Fact
+                {
+                    Key = "DATE",
+                    Value = b.date1.Value.ToShortDateString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "TIME",
+                    Value = b.time1.ToString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "FROM",
+                    Value = b.origin.TrimEnd()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "TO",
+                    Value = b.destination.TrimEnd()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "VACANCY",
+                    Value = b.MAXNO.ToString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "MEMBERS",
+                    Value = b.names
+                });
+                CardAction namebutton = new CardAction()
+                {
+                    Value = "https://www.facebook.com/" + b.fbid,
+                    Type = "openUrl",
+                    Title = b.name
+                };
+                cardButtons.Add(namebutton);
+                CardAction plButton = new CardAction()
+                {
+                    Value = JsonConvert.SerializeObject(b),
+                    Type = "postBack",
+                    Title = "Join Pool"
+                };
+                cardButtons.Add(plButton);
+                HeroCard plCard = new HeroCard()
+                {
+
+                    Text = card,
+                    Images = cardImages,
+                    Buttons = cardButtons
+                };
+                
+                try
+                {
+                    Attachment plAttachment = plCard.ToAttachment();
+                    //Attachment rAttachment = reCard.ToAttachment();
+                    reply.Attachments.Add(plAttachment);
+                    //reply.Attachments.Add(rAttachment);
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                    //await JoinCard.show(activity, connector, card);
+                }
+                catch (Exception ex)
+                {
+                    await JoinCard.show(activity, connector, ex.Message);
+                }
+            }
             return 1;
         }
     }
