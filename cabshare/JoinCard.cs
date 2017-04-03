@@ -21,11 +21,11 @@ namespace cabshare
             foreach(var b in requests)
             {
                 string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(),b.names);
-                Activity reply = activity.CreateReply("");
+                Activity reply = activity.CreateReply(card);
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
 
-                List<CardAction> cardButtons = new List<CardAction>();
+                List<CardAction> cardButtons =  new List<CardAction>();
                 CardAction namebutton = new CardAction()
                 {
                     Value = "https://www.facebook.com/"+b.fbid,
@@ -43,13 +43,14 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = "",
+                    Title = card,
                     Images = cardImages,
                     Buttons = cardButtons
                 };
+
                 Attachment plAttachment = plCard.ToAttachment();
                 reply.Attachments.Add(plAttachment);
-                await JoinCard.show(activity, connector, card);
+                //await JoinCard.show(activity, connector, card);
                 await connector.Conversations.ReplyToActivityAsync(reply);
                 
             }
