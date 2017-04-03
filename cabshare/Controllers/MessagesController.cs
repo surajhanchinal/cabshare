@@ -101,7 +101,7 @@ namespace cabshare
                     {
                         match = DB.Requests.Where(b => b.id == i).FirstOrDefault(); 
                     }
-
+                    naam = match.name;
                     if (match != null)
                         match.names = match.names + "_" + e;
                     await JoinCard.show(activity,connector,match.names);
@@ -112,6 +112,17 @@ namespace cabshare
                             db.Entry(match).State = EntityState.Modified;
                             await db.SaveChangesAsync();
                         }
+                        var botAccount = activity.Recipient;
+                        var f = await GetUserName1(results[2]);
+                        var userAccount = new ChannelAccount(name: f, id: results[2]);
+                        var conversationId = await connector.Conversations.CreateDirectConversationAsync(botAccount, userAccount);
+                        IMessageActivity message = Activity.CreateMessageActivity();
+                        message.From = botAccount;
+                        message.Recipient = userAccount;
+                        message.Conversation = new ConversationAccount(id: conversationId.Id);
+                        message.Text = String.Format("The Join request you sent to {0} was accepted", naam);
+                        message.Locale = "en-Us";
+                        await connector.Conversations.SendToConversationAsync((Activity)message);
                     }
                     catch (DbEntityValidationException dbEx)
                     {
