@@ -21,7 +21,7 @@ namespace cabshare
             foreach(var b in requests.Where(x => x.MAXNO > 0))
             {
                 string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(),b.names,b.MAXNO);
-                Activity reply = activity.CreateReply(card);
+                Activity reply = activity.CreateReply("");
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
                 List<Fact> facts = new List<Fact>();
