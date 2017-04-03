@@ -43,8 +43,7 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Title = "",
-                    Text = "",
+                    Text = "options",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
