@@ -82,13 +82,19 @@ namespace cabshare
                     Facts = facts,
                     Buttons = cardButtons
                 };
-                Attachment plAttachment = plCard.ToAttachment();
-                Attachment rAttachment = rcard.ToAttachment();
-                reply.Attachments.Add(plAttachment);
-                reply.Attachments.Add(rAttachment);
-                await connector.Conversations.ReplyToActivityAsync(reply);
-                //await JoinCard.show(activity, connector, card);
-
+                try
+                {
+                    Attachment plAttachment = plCard.ToAttachment();
+                    Attachment rAttachment = rcard.ToAttachment();
+                    reply.Attachments.Add(plAttachment);
+                    reply.Attachments.Add(rAttachment);
+                    await connector.Conversations.ReplyToActivityAsync(reply);
+                    //await JoinCard.show(activity, connector, card);
+                }
+                catch(Exception ex)
+                {
+                    await JoinCard.show(activity, connector, ex.Message);
+                }
             }
             return 1;
         }
