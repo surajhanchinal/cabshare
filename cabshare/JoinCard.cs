@@ -24,8 +24,37 @@ namespace cabshare
                 Activity reply = activity.CreateReply(card);
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
-
+                List<Fact> facts = new List<Fact>();
                 List<CardAction> cardButtons =  new List<CardAction>();
+                facts.Add(new Fact {
+                    Key = "DATE",
+                    Value = b.date1.Value.ToShortDateString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "TIME",
+                    Value = b.time1.ToString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "FROM",
+                    Value = b.origin.TrimEnd()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "TO",
+                    Value = b.destination.TrimEnd()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "VACANCY",
+                    Value = b.MAXNO.ToString()
+                });
+                facts.Add(new Fact
+                {
+                    Key = "MEMBERS",
+                    Value = b.names
+                });
                 CardAction namebutton = new CardAction()
                 {
                     Value = "https://www.facebook.com/"+b.fbid,
@@ -43,16 +72,21 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = "options",
+                    Text = card,
                     Images = cardImages,
                     Buttons = cardButtons
                 };
-
+                ReceiptCard rcard = new ReceiptCard()
+                {
+                    Title = b.name,
+                    Facts = facts,
+                    Buttons = cardButtons
+                };
                 Attachment plAttachment = plCard.ToAttachment();
                 reply.Attachments.Add(plAttachment);
-                
+                reply.Attachments.Add(plAttachment);
                 await connector.Conversations.ReplyToActivityAsync(reply);
-                await JoinCard.show(activity, connector, card);
+                //await JoinCard.show(activity, connector, card);
 
             }
             return 1;
