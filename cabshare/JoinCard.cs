@@ -22,8 +22,9 @@ namespace cabshare
             replyToConversation.Recipient = activity.From;
             replyToConversation.Type = "message";
             replyToConversation.Attachments = new List<Attachment>();
-            List<CardImage> cardImages = new List<CardImage>();
-            cardImages.Add(new CardImage(url: "https://<ImageUrl1>"));
+            //List<CardImage> cardImages = new List<CardImage>();
+            //List<CardImage> cardImages1 = new List<CardImage>();
+            //ardImages.Add(new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"));
             List<CardAction> cardButtons = new List<CardAction>();
             CardAction plButton = new CardAction()
             {
@@ -37,7 +38,7 @@ namespace cabshare
                 Title = "Pork Shoulder",
                 Subtitle = "8 lbs",
                 Text = null,
-                Image = new CardImage(url: "https://<ImageUrl1>"),
+                //Image = new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"),
                 Price = "16.25",
                 Quantity = "1",
                 Tap = null
@@ -47,7 +48,7 @@ namespace cabshare
                 Title = "Bacon",
                 Subtitle = "5 lbs",
                 Text = null,
-                Image = new CardImage(url: "https://<ImageUrl2>"),
+                //Image = new CardImage(url: "http://cdn.wallpapersafari.com/31/56/UAae5M.jpg"),
                 Price = "34.50",
                 Quantity = "2",
                 Tap = null
