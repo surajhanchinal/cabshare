@@ -84,13 +84,43 @@ namespace cabshare
                     Tax = "",
                     Total = "",
                     Vat = "",
-
-                    
+                                       
+                };
+                ReceiptItem lineItem1 = new ReceiptItem()
+                {
+                    Title = "Pork Shoulder",
+                    Subtitle = "8 lbs",
+                    Text = null,
+                    Image = new CardImage(url: "https://<ImageUrl1>"),
+                    Price = "16.25",
+                    Quantity = "1",
+                    Tap = null
+                };
+                ReceiptItem lineItem2 = new ReceiptItem()
+                {
+                    Title = "Bacon",
+                    Subtitle = "5 lbs",
+                    Text = null,
+                    Image = new CardImage(url: "https://<ImageUrl2>"),
+                    Price = "34.50",
+                    Quantity = "2",
+                    Tap = null
+                };
+                List<ReceiptItem> receiptList = new List<ReceiptItem>();
+                receiptList.Add(lineItem1);
+                receiptList.Add(lineItem2);
+                ReceiptCard reCard = new ReceiptCard()
+                {
+                    Title = "I'm a receipt card, isn't this bacon expensive?",
+                    Buttons = cardButtons,
+                    Items = receiptList,
+                    Total = "275.25",
+                    Tax = "27.52"
                 };
                 try
                 {
                     //Attachment plAttachment = plCard.ToAttachment();
-                    Attachment rAttachment = rcard.ToAttachment();
+                    Attachment rAttachment = reCard.ToAttachment();
                     //reply.Attachments.Add(plAttachment);
                     reply.Attachments.Add(rAttachment);
                     await connector.Conversations.ReplyToActivityAsync(reply);
