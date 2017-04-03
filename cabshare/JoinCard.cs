@@ -80,7 +80,12 @@ namespace cabshare
                 {
                     Title = b.name,
                     Facts = facts,
-                    Buttons = cardButtons
+                    Buttons = cardButtons,
+                    Tax = "",
+                    Total = "",
+                    Vat = "",
+
+                    
                 };
                 try
                 {
