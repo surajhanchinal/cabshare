@@ -198,7 +198,7 @@ namespace cabshare
                 dynamic fbQRButtonBlue = new JObject();
                 fbQRButtonBlue.content_type = "text";
                 fbQRButtonBlue.title = "NO";
-                fbQRButtonBlue.payload = String.Format("_NO_a_{0}_a_{1}", request.id.ToString(), activity.From.Id.ToString());
+                fbQRButtonBlue.payload = String.Format("_NO_a_{0}_a_{1}_", request.id.ToString(), activity.From.Id.ToString());
                 //fbQRButtonBlue.payload = String.Format("{\"Answer\":\"NO\",\"Id\":\"{0}\",\"psid\":\"{1}\"", request.id, activity.From.Id);
                 fbQRButtonBlue.image_url = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Button_Icon_Blue.svg/768px-Button_Icon_Blue.svg.png";
 
