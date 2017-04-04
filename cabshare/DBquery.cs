@@ -75,8 +75,8 @@ namespace cabshare
                 Request user = new Request();
                 
                 user.name = username;
-                user.origin = data.origin;
-                user.destination = data.dest;
+                user.origin = data.origin.ToUpper();
+                user.destination = data.dest.ToUpper();
                 user.date1 = data.date;
                 user.time1 = data.time.TimeOfDay;
                 user.fbid = fbid;
