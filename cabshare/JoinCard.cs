@@ -20,7 +20,7 @@ namespace cabshare
         {
             foreach (var b in requests.Where(x => x.MAXNO > 0))
             {
-                string card = String.Format("DATE : {0}    TIME : {1}\r\nFROM : {2}    TO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(), b.names, b.MAXNO);
+                string card = String.Format("DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(), b.names, b.MAXNO);
                 Activity reply = activity.CreateReply("");
                 reply.Attachments = new List<Attachment>();
                 List<CardImage> cardImages = new List<CardImage>();
@@ -44,7 +44,7 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = card,
+                    Text = "",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
@@ -56,7 +56,7 @@ namespace cabshare
                     reply.Attachments.Add(plAttachment);
                     //reply.Attachments.Add(rAttachment);
                     await connector.Conversations.ReplyToActivityAsync(reply);
-                    //await JoinCard.show(activity, connector, card);
+                    await JoinCard.show(activity, connector, card);
                 }
                 catch (Exception ex)
                 {

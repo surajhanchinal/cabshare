@@ -226,7 +226,7 @@ namespace cabshare
                 var z = await DBquery.dataquery(y);
                 if(z.Count == 0)
                 {
-                    await JoinCard.show(activity, connector, "Sorry. There were no matches. You can create your own pool");
+                    await JoinCard.show(activity, connector, "Sorry. There were no matches. You can create your own pool.");
                 }
                 await JoinCard.Cards(activity, connector, z);
                 return 1;
@@ -238,7 +238,7 @@ namespace cabshare
                 cleandata cleaned = await DBquery.Clean(x);
                 if ((cleaned.date == null) || (cleaned.dest == "") || (cleaned.origin == "") || (cleaned.time == default(DateTime)))
                 {
-                    return await JoinCard.show(activity, connector, "Provide Complete Travel Information.");
+                    return await JoinCard.show(activity, connector, "Please provide complete travel information.");
                 }
                 else
                 {
