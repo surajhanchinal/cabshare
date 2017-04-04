@@ -33,7 +33,7 @@ namespace cabshare
                 
                 var p = await GetFBid(activity);
                 var d = await GetEntityFromLUIS(activity.Text);
-                await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id+"   "+ d.topScoringIntent.intent+"  "+activity.Text);
+                //await JoinCard.show(activity, connector, activity.ChannelData.ToString()+"        "+ p+"   "+ activity.From.Id+"   "+ d.topScoringIntent.intent+"  "+activity.Text);
                 await ReplyCreate(activity, connector);
                 
 

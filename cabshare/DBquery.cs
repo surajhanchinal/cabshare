@@ -86,7 +86,7 @@ namespace cabshare
                 DB.Requests.Add(user);
                 await DB.SaveChangesAsync();
             }
-            return "Request added";
+            return "Request added.";
         }
     }
 }

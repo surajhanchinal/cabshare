@@ -44,7 +44,7 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = "",
+                    Text = "Profile Link",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
@@ -55,8 +55,9 @@ namespace cabshare
                     //Attachment rAttachment = reCard.ToAttachment();
                     reply.Attachments.Add(plAttachment);
                     //reply.Attachments.Add(rAttachment);
-                    await connector.Conversations.ReplyToActivityAsync(reply);
+                    
                     await JoinCard.show(activity, connector, card);
+                    await connector.Conversations.ReplyToActivityAsync(reply);
                 }
                 catch (Exception ex)
                 {
