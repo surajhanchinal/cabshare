@@ -67,7 +67,7 @@ namespace cabshare
             {
                 var z = (from b in DB.Requests where b.name == username select b).ToList();
                 match.AddRange(z);
-                z = (from b in DB.Requests where b.names.IndexOf(username) != -1 select b).ToList();
+                z = (from b in DB.Requests where (b.names.IndexOf(username) != -1) && (b.name != username) select b).ToList();
                 match.AddRange(z);
             }
             return match;
