@@ -111,7 +111,7 @@ namespace cabshare
                     naam = match.name;
                     if (match != null)
                     {
-                        match.names = match.names + "_" + e;
+                        match.names = match.names + ", " + e;
                         match.MAXNO--;
                     }
                     await JoinCard.show(activity, connector, match.names);
@@ -130,7 +130,7 @@ namespace cabshare
                         message.From = botAccount;
                         message.Recipient = userAccount;
                         message.Conversation = new ConversationAccount(id: conversationId.Id);
-                        message.Text = String.Format("The Join request you sent to {0} was accepted", naam);
+                        message.Text = String.Format("The join request you sent to {0} was accepted.", naam);
                         message.Locale = "en-Us";
                         await connector.Conversations.SendToConversationAsync((Activity)message);
                     }
@@ -145,7 +145,7 @@ namespace cabshare
                             }
                         }
                     }
-                    await JoinCard.show(activity, connector, "join request accepted");
+                    await JoinCard.show(activity, connector, String.Format("{0} was added to your pool.",e));
 
 
                 }
@@ -160,7 +160,7 @@ namespace cabshare
                         message.From = botAccount;
                         message.Recipient = userAccount;
                         message.Conversation = new ConversationAccount(id: conversationId.Id);
-                        message.Text = String.Format("The Join request you sent to {0} was not accepted", naam);
+                        message.Text = String.Format("The join request you sent to {0} was not accepted.", naam);
                         message.Locale = "en-Us";
                         await connector.Conversations.SendToConversationAsync((Activity)message);
 
@@ -190,8 +190,15 @@ namespace cabshare
                 message.From = botAccount;
                 message.Recipient = userAccount;
                 message.Conversation = new ConversationAccount(id: conversationId.Id);
-                message.Text = String.Format("{0} wants to join your Carpool. Select 'YES' or 'NO'",activity.From.Name);
+                message.Text = String.Format("{0} wants to join your carpool. Select 'YES' or 'NO'.",activity.From.Name);
                 message.Locale = "en-Us";
+                List<CardAction> cardButtons = new List<CardAction>();
+                CardAction namebutton = new CardAction()
+                {
+                    Value = "https://www.facebook.com/" + request.fbid,
+                    Type = "openUrl",
+                    Title = request.name
+                };
                 dynamic quickReplies = new JObject();
                 dynamic fbQRButtonRed = new JObject();
                 fbQRButtonRed.content_type = "text";

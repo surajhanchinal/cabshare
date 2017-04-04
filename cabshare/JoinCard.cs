@@ -26,36 +26,7 @@ namespace cabshare
                 List<CardImage> cardImages = new List<CardImage>();
                 List<Fact> facts = new List<Fact>();
                 List<CardAction> cardButtons = new List<CardAction>();
-                facts.Add(new Fact
-                {
-                    Key = "DATE",
-                    Value = b.date1.Value.ToShortDateString()
-                });
-                facts.Add(new Fact
-                {
-                    Key = "TIME",
-                    Value = b.time1.ToString()
-                });
-                facts.Add(new Fact
-                {
-                    Key = "FROM",
-                    Value = b.origin.TrimEnd()
-                });
-                facts.Add(new Fact
-                {
-                    Key = "TO",
-                    Value = b.destination.TrimEnd()
-                });
-                facts.Add(new Fact
-                {
-                    Key = "VACANCY",
-                    Value = b.MAXNO.ToString()
-                });
-                facts.Add(new Fact
-                {
-                    Key = "MEMBERS",
-                    Value = b.names
-                });
+                
                 CardAction namebutton = new CardAction()
                 {
                     Value = "https://www.facebook.com/" + b.fbid,
