@@ -44,7 +44,7 @@ namespace cabshare
                 HeroCard plCard = new HeroCard()
                 {
 
-                    Text = "Profile Link",
+                    Text = "       Profile Link",
                     Images = cardImages,
                     Buttons = cardButtons
                 };
