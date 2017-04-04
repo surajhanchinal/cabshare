@@ -82,6 +82,7 @@ namespace cabshare
                 user.fbid = fbid;
                 user.psid = psid;
                 user.MAXNO = data.noop;
+                user.names = username;
                 DB.Requests.Add(user);
                 await DB.SaveChangesAsync();
             }
