@@ -258,7 +258,12 @@ namespace cabshare
 
                 string y = await GetUserName(activity);
                 var z = await DBquery.showdata(y);
-                await JoinCard.Cards(activity, connector, z);
+                if (z.Count==0)
+                {
+                    await JoinCard.show(activity, connector, "You do not have any Pools. You can join or create you own.");
+                }
+                else
+                await JoinCard.ShowCards(activity, connector,y,z);
                 return 1;
             }
             

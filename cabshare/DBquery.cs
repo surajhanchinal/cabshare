@@ -62,11 +62,15 @@ namespace cabshare
         }
         public static async Task<List<Request>> showdata(string username)
         {
+            List<Request> match = new List<Request>();
             using (var DB = new travelrecordEntities())
             {
-                var match = (from b in DB.Requests where (b.name == username) select b).ToList();
-                return match;
+                var z = (from b in DB.Requests where b.name == username select b).ToList();
+                match.AddRange(z);
+                z = (from b in DB.Requests where b.names.IndexOf(username) != -1 select b).ToList();
+                match.AddRange(z);
             }
+            return match;
         }
         public static async Task<string> addquery(cleandata data, string username,string psid,string fbid)
         {
