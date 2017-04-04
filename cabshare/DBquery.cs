@@ -55,7 +55,7 @@ namespace cabshare
 
             using (var DB = new travelrecordEntities())
             {
-                var match = (from b in DB.Requests where (b.origin == data.origin || data.origin == "") && (b.destination == data.dest || data.dest == "") && (b.date1 == data.date || data.date == null) && (b.time1 == data.time.TimeOfDay || data.time == default(DateTime)) select b).ToList();
+                var match = (from b in DB.Requests where (b.origin == data.origin || data.origin == "") && (b.destination == data.dest || data.dest == "") && (b.date1 == data.date || data.date == null) && (b.time1 == data.time.TimeOfDay || data.time == default(DateTime)) && (b.MAXNO>0) select b).ToList();
                 return match;
 
             }

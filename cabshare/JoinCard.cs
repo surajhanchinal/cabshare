@@ -18,7 +18,7 @@ namespace cabshare
         }
         public static async Task<int> Cards(Activity activity, ConnectorClient connector, List<Request> requests)
         {
-            foreach (var b in requests.Where(x => x.MAXNO > 0))
+            foreach (var b in requests)
             {
                 string card = String.Format("DATE : {0}\r\nTIME : {1}\r\nFROM : {2}\r\nTO : {3}\r\nVACANCY : {5}\r\nMEMBERS : {4}", b.date1.Value.ToShortDateString(), b.time1.ToString(), b.origin.TrimEnd(), b.destination.TrimEnd(), b.names, b.MAXNO);
                 Activity reply = activity.CreateReply("");
